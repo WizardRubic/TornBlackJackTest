@@ -5,6 +5,11 @@ With the current program simulation it looks like it is beatable. There are a fe
 
 
 # Why I think the in game casino may be in our favor
+
+Inline-style: 
+![Nash Beats the Casino](https://github.com/WizardRubic/TornBlackJackTest/blob/master/nashWins.png "Nash Beats the Casino")
+
+
 https://www.torn.com/forums.php#!p=threads&f=2&t=15985799&b=0&a=0&start=20&to=17328277
 https://www.torn.com/forums.php#!p=threads&f=2&t=15985799&b=0&a=0&start=20&to=17328547
 
