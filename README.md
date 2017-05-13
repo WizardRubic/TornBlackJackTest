@@ -24,6 +24,13 @@ Black jack rules:
 
 .........tells us instantly if we won the insurance bet
 
+<dl>
+  <dt>Black jack rules</dt>
+  <dd>Is something people use sometimes.</dd>
+
+  <dt>Markdown in HTML</dt>
+  <dd>Does *not* work **very** well. Use HTML <em>tags</em>.</dd>
+</dl>
 
 Split:
 	Seems you can double down on the second split and higher only
