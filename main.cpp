@@ -428,7 +428,7 @@ int main () {
 			int curHandTotal = sumOfVector(userHand[a]);
 			if (userBust[a] == false) {
 				// 5 card
-				if (userHand[a].size()==5) {
+				if ((userHand[a].size()==5) && (!((dealerSum == 21)&&(dealerHand.size()==2)))){
 					userTotal+=currentBet*2;
 				} else if (((curHandTotal == 21)&&(userHand[a].size()==2)) && (!((dealerSum == 21)&&(dealerHand.size()==2))) )  {
 					// natural 21 and dealer doesn't have nat 21
