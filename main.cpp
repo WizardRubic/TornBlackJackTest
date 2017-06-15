@@ -17,6 +17,26 @@
 
 using namespace std;
 
+
+// TOOD
+// Fix the split glitch
+// Replace determineAction!
+	// take in an actual chart
+	// first hand deal with aces after don't
+// need to make it so 5 card charlie loses to dealer nat 21? yes, our 5 card will lose to their 21.
+// TODO make it so 5 card charlie on dealer beats what w/e we got
+// see split rules about what's allowed
+// second hand can split
+
+
+
+// DONE
+// do we need to see what happens if we get a 21, does the dealer get to draw til 5 card? inconsequential as nat beats 5 card
+// can the dealer get 5 card charlies? YES
+	
+
+
+
 int sumOfVector(vector<int> & cards) {
 	// Aces can count as 1 or 11. past first 
 	// 2 cards assume they're 11 instead of ace 
@@ -44,8 +64,13 @@ int sumOfVector(vector<int> & cards) {
 	return sum;
 }
 
+
+
+
+
 // determineAction()
 // pre: not busted
+// THIS CODE IS A MESS. TEMP HOT FIX JUST TO SEE IF WE CAN BEAT THE GAME. ANSWER IS YES!
 int determineAction(vector<int> & cards, vector<int> & dealerCards, bool s) {
 	bool containsAce = false;
 	bool containsPair = false;
@@ -216,6 +241,12 @@ int determineAction(vector<int> & cards, vector<int> & dealerCards, bool s) {
 
 
 int main () {
+
+
+	// parse the input here
+	// look up hand in the chart? represent the chart as an array?
+
+
 	cout << "Entered Main" << endl;
 
 	
@@ -239,7 +270,7 @@ int main () {
 	bool dealNeeded;
 	int currentBet;
 
-	int splitTo = 1;
+	int splitTo = 1; // number of hands, can be increased when a split happens
 // // DEBUG
 
 	for(int y = 0; y<30000; y++) {
@@ -264,7 +295,7 @@ int main () {
 		// Every loop must call determineAction with the current hand
 		// Then it makes a decision 
 		bool surrender = false;
-		bool s = false;
+		bool splitBool = false; // split
 		for (int a = 0; userHand[a].size()>=2 && a<4; a++) {
 			cout << "entered a = " << a << endl;
 			handDone = false;
@@ -291,7 +322,7 @@ int main () {
 					cout << debugA << " ";
 				}
 				cout << endl;
-				switch(determineAction(userHand[a], dealerHand, s)) {
+				switch(determineAction(userHand[a], dealerHand, splitBool)) {
 					case HIT:
 						cout << "HIT CASE entered"<< endl;
 						userHand[a].push_back(deck.draw());
@@ -325,7 +356,7 @@ int main () {
 					case SPLIT:
 						cout << "SPLIT CASE entered"<< endl;
 						if (a < 3) {
-							s = true;
+							splitBool = true;
 							// double the bet
 							userTotal -= BASEBET;
 							// split the pair
