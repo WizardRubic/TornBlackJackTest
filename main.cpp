@@ -5,7 +5,7 @@
 // #include <cstdlib>
 // #include <ctime>
 
-#define TEST
+// #define TEST
 
 #define HIT 0
 #define STAND 1
@@ -16,7 +16,9 @@
 
 #define ACE 11
 
-#define BASEBET 10
+#define BASEBET 20
+#define TOKENS 1000000
+#define STARTTOTAL 2000
 
 using namespace std;
 
@@ -66,177 +68,22 @@ int sumOfVector(vector<int> & cards) {
 	return sum;
 }
 
+// printStats
+// Hands played
+// User bet
+// EV of each bet
+// Starting Total
+// Lowest point
+// Ending Total
 
-
-
-
-// determineAction()
-// pre: not busted
-// THIS CODE IS A MESS. TEMP HOT FIX JUST TO SEE IF WE CAN BEAT THE GAME. ANSWER IS YES!
-int determineAction(vector<int> & cards, vector<int> & dealerCards, bool s) {
-	bool containsAce = false;
-	bool containsPair = false;
-	int handVal = sumOfVector(cards);
-	if (cards.size() == 2) {
-		for (int i : cards) {
-			if (i == ACE) {
-				containsAce = true;
-			}
-		}
-		if (cards[0] == cards[1]) {
-			containsPair = true;
-		}
-		if (containsAce) {
-			if( ((handVal>=13) && (handVal<=17)) && ((dealerCards[0] <= ACE) && (dealerCards[0] >= 7)) ) {
-				 return HIT;
-			} else if (  ((handVal>=13)&&(handVal<=14))  && ((dealerCards[0] <= 4) && (dealerCards[0] >= 2))  ) {
-				return HIT;
-			} else if (  ((handVal>=15)&&(handVal<=16))  && ((dealerCards[0] <= 3) && (dealerCards[0] >= 2))  ) {
-				return HIT;
-			} else if ( (handVal==17)  && (dealerCards[0] == 2)  ) {
-				return HIT;
-			} else if ( (handVal==18)  && ((dealerCards[0] <= ACE) && (dealerCards[0] >= 9))  ) {
-				return HIT;
-			} else if (  ((handVal>=13)&&(handVal<=18))  && ((dealerCards[0] <= 6) && (dealerCards[0] >= 5))  ) {
-				if (s) { 
-					return HIT;
-				}
-				return DOUBLE;
-			} else if ( ((handVal>=15)&&(handVal<=18))  && (dealerCards[0] == 4)  ) {
-				if (s) { 
-					return HIT;
-				}
-				return DOUBLE;
-			} else if ( ((handVal>=17)&&(handVal<=18))  && (dealerCards[0] == 3)  ) {
-				if (s) { 
-					return HIT;
-				}
-				return DOUBLE;
-			} else if (  ((handVal>=19)&&(handVal<=20))  && ((dealerCards[0] <= ACE) && (dealerCards[0] >= 2))  ) {
-				return STAND;
-			} else if ( (handVal==18)  && (dealerCards[0] == 2)  ) {
-				return STAND;
-			} else if ( (handVal==18)  && ((dealerCards[0] <= 8) && (dealerCards[0] >= 7))  ) {
-				return STAND;
-			} else if (handVal==12) {
-				return SPLIT;
-			} else if (handVal == 21) {
-				return STAND;
-			}
-		} else if (containsPair) {
-			if( ((handVal==4) || (handVal==6) || (handVal==14)) &&  ((dealerCards[0] >= 2) && (dealerCards[0] <= 7))   ) {
-				return SPLIT;
-			} else if ( ((handVal==12)|| (handVal==18) ) &&  ((dealerCards[0] >= 2) && (dealerCards[0] <= 6))   ) {
-				return SPLIT;
-			} else if (handVal == 16) {
-				return SPLIT;
-			} else if ( ((handVal==18) ) &&  ((dealerCards[0] >= 8) && (dealerCards[0] <= 9))   ) {
-				return SPLIT;
-			} else if (handVal == 20) {
-				return STAND;
-			} else if ( ((handVal==18) ) &&  ( (dealerCards[0] == 7))   ) {
-				return STAND;
-			} else if ( ((handVal==18) ) &&  ((dealerCards[0] >= 10) && (dealerCards[0] <= ACE))   ) {
-				return STAND;
-			} else if ( ((handVal==10) ) &&  ((dealerCards[0] >= 2) && (dealerCards[0] <= 9))   ) {
-				if (s) { 
-					return HIT;
-				}
-				return DOUBLE;
-			} else if ( ((handVal==10) ) &&  ((dealerCards[0] >= 10) && (dealerCards[0] <= ACE))   ) {
-				return HIT;
-			} else if ( ((handVal==8) ) &&  ((dealerCards[0] >= 2) && (dealerCards[0] <= 4))   ) {
-				return HIT;
-			} else if (    ( (handVal==8) || (handVal==12)  )   &&    ((dealerCards[0] >= 7) && (dealerCards[0] <= ACE))   ) {
-				return HIT;
-			} else if (    ( (handVal==6) || (handVal==14)  )   &&    ((dealerCards[0] >= 8) && (dealerCards[0] <= ACE))   ) {
-				return HIT;
-			} else if (    ( (handVal==4)   )   &&    ((dealerCards[0] >= 8) && (dealerCards[0] <= ACE))   ) {
-				return HIT;
-			} else if (    ( (handVal==8)   )   &&    ((dealerCards[0] >= 5) && (dealerCards[0] <= 6))   ) {
-				return SPLIT;
-			}
-		} 
-	}
-	if (    ( (handVal>=5)&&(handVal<=8) )      ) {
-		return HIT;
-	} else if ((handVal==9)&&(dealerCards[0] == 2)) {
-		return HIT;
-	} else if (    ( (handVal==9)   )   &&    ((dealerCards[0] >= 7) && (dealerCards[0] <= ACE))   ) {
-		return HIT;
-	} else if (    (handVal==9)   &&    ((dealerCards[0] >= 3) && (dealerCards[0] <= 6))   ) {
-		if (cards.size() == 2){
-			if (s) { 
-					return HIT;
-			}
-			return DOUBLE;
-		} else {
-			return HIT;
-		}
-	} else if (    (handVal==10)   &&    ((dealerCards[0] >= 2) && (dealerCards[0] <= 9))   ) {
-		if (cards.size() == 2){
-			if (s) { 
-					return HIT;
-			}	
-			return DOUBLE;
-		} else {
-			return HIT;
-		}
-	} else if (    (handVal==10)   &&    ((dealerCards[0] >= 10) && (dealerCards[0] <= ACE))   ) {
-		return HIT;
-	} else if (    (handVal==11)   &&    ((dealerCards[0] >= 2) && (dealerCards[0] <= 10))   ) {
-		if (cards.size() == 2){
-			if (s) { 
-					return HIT;
-			}
-			return DOUBLE;
-		} else {
-			return HIT;
-		}
-	} else if (    (handVal==11)   &&    ((dealerCards[0] == ACE))   ) {
-		return HIT;
-	} else if (    (handVal==12)   &&    ((dealerCards[0] >= 2) && (dealerCards[0] <= 3))   ) {
-		return HIT;
-	} else if (    (handVal==12)   &&    ((dealerCards[0] >= 4) && (dealerCards[0] <= 6))   ) {
-		return STAND;
-	} else if (    ( (handVal>=12)&&(handVal<=14) )   &&    ((dealerCards[0] >= 7) && (dealerCards[0] <= ACE))   ) {
-		return HIT;
-	} else if (    ( (handVal>=13)&&(handVal<=16) )   &&    ((dealerCards[0] >= 2) && (dealerCards[0] <= 6))   ) {
-		return STAND;
-	} else if (    ( (handVal>=17)&&(handVal<=19) )   ) {
-		return STAND;
-	} else if (    ( (handVal>=15)&&(handVal<=16) )   &&    ((dealerCards[0] >= 7) && (dealerCards[0] <= 8))   ) {
-		return HIT;
-	} else if (    ( (handVal==15) )   &&    ((dealerCards[0] == 9) || (dealerCards[0] == ACE))   ) {
-		return HIT;
-	} else if (    ( (handVal==16) )    &&    ((dealerCards[0] >= 9) && (dealerCards[0] <= ACE))   ) {
-		if (cards.size() == 2){
-			return SURRENDER;
-		} else {
-			return STAND;
-		}
-	} else if (    ( (handVal==15) )    &&    ((dealerCards[0] ==10))   ) {
-		if (cards.size() == 2){
-			return SURRENDER;
-		} else {
-			return STAND;
-		}
-	} else if ((handVal == 21) || (handVal == 20)) {
-				return STAND;
-	}	
-	cout << "UNCAUGHT HAND: " << "mycards: ";
-	for (int a :cards){
-		cout << a << " "; 
-	}
-	cout << "opp cards: ";
-	for(int a : dealerCards) {
-		cout << a << " ";
-	}
-	cout<<endl;
-	// Aces can count as 1 or 11. past first 2 cards assume they're 11 instead of ace for summaton unless it'd be a bust in which case assume 1.
-	// Use chart
-	// Eval based on num of cards in hand (vector size)
-	return 30;
+void printStats(double userTotal, double lowest) {
+	cout << "Tokens Spent:   " << TOKENS << endl;
+	cout << "Basebet:        " << BASEBET << endl;
+	double ev = BASEBET + (double)((userTotal - STARTTOTAL))/TOKENS;
+	cout << "EV of each bet: " << ev << endl;
+	cout << "Starting total: " << STARTTOTAL << endl;
+	cout << "Lowest point:   " << lowest << endl;
+	cout << "Ending Total:   " << userTotal << endl;
 }
 
 
@@ -344,13 +191,19 @@ int main (int argc, char *argv[]) {
 	
 // assume every 25 cards we shuffle the deck again
 
+	if (argc!=2) {
+		cout << "USAGE: bjsim.exe <chartFileFromSheets>"<<endl;
+		return 0;
+	}
 
 	// init sim
 	Deck deck; // starts off preshuffled
 	vector<int> dealerHand;
 	vector<int> userHand[4]; // userHands[1] to 3 only get used if split
+	ChartParser cp;// make a chart parser
+	cp.load(argv[1]);
 
-	double userTotal=100;
+	double userTotal=STARTTOTAL;
 
 	bool handDone;
 	bool userBust[4];
@@ -358,11 +211,13 @@ int main (int argc, char *argv[]) {
 	int currentBet;
 
 	int splitTo = 1; // number of hands, can be increased when a split happens
-// // DEBUG
 
-	for(int y = 0; y<30000; y++) {
+	double lowest = STARTTOTAL;
+
+
+	for(int y = 0; y<TOKENS; y++) {
 		splitTo = 1;
-		cout << "----------------- NEW HAND ------------" << endl;
+		// cout << "----------------- NEW HAND ------------" << endl;
 		// Deal initial 3 cards and take the bet
 		userHand[0].push_back(deck.draw());
 		userHand[0].push_back(deck.draw());
@@ -370,11 +225,11 @@ int main (int argc, char *argv[]) {
 		userTotal -= BASEBET;
 		dealNeeded = false;
 		
-		cout << "dealerHand: ";
-		for(int debugA :dealerHand) {
-			cout << debugA << " ";
-		}
-		cout << endl;
+		// cout << "dealerHand: ";
+		// for(int debugA :dealerHand) {
+		// 	cout << debugA << " ";
+		// }
+		// cout << endl;
 
 		currentBet = BASEBET;
 		
@@ -384,53 +239,53 @@ int main (int argc, char *argv[]) {
 		bool surrender = false;
 		bool splitBool = false; // split
 		for (int a = 0; userHand[a].size()>=2 && a<4; a++) {
-			cout << "entered a = " << a << endl;
+			// cout << "entered a = " << a << endl;
 			handDone = false;
 			userBust[a] = false;
 			// loop til current hand is finished
 			while (!handDone) {
-				cout << "userhand[0]: ";
-				for(int debugA :userHand[0]) {
-					cout << debugA << " ";
-				}
-				cout << endl;
-				cout << "userhand[1]: ";
-				for(int debugA :userHand[1]) {
-					cout << debugA << " ";
-				}
-				cout << endl;
-				cout << "userhand[2]: ";
-				for(int debugA :userHand[2]) {
-					cout << debugA << " ";
-				}
-				cout << endl;
-				cout << "userhand[3]: ";
-				for(int debugA :userHand[3]) {
-					cout << debugA << " ";
-				}
-				cout << endl;
-				switch(determineAction(userHand[a], dealerHand, splitBool)) {
+				// cout << "userhand[0]: ";
+				// for(int debugA :userHand[0]) {
+				// 	cout << debugA << " ";
+				// }
+				// cout << endl;
+				// cout << "userhand[1]: ";
+				// for(int debugA :userHand[1]) {
+				// 	cout << debugA << " ";
+				// }
+				// cout << endl;
+				// cout << "userhand[2]: ";
+				// for(int debugA :userHand[2]) {
+				// 	cout << debugA << " ";
+				// }
+				// cout << endl;
+				// cout << "userhand[3]: ";
+				// for(int debugA :userHand[3]) {
+				// 	cout << debugA << " ";
+				// }
+				// cout << endl;
+				switch(cp.query(userHand[a], dealerHand, splitBool)) {
 					case HIT:
-						cout << "HIT CASE entered"<< endl;
+						// cout << "HIT CASE entered"<< endl;
 						userHand[a].push_back(deck.draw());
 						if (sumOfVector(userHand[a]) > 21) {
-							cout << "Busted on hand "<< a << endl;
+							// cout << "Busted on hand "<< a << endl;
 							handDone = true;
 							userBust[a] = true;
 						} else if (userHand[a].size()>=5) {
-							cout << "5 card on hand "<< a << endl;
+							// cout << "5 card on hand "<< a << endl;
 							// Five card charlie
 							handDone = true;
 						}
 						break;
 
 					case STAND:
-						cout << "STAND CASE entered"<< endl;
+						// cout << "STAND CASE entered"<< endl;
 						handDone = true; 
 						break;
 
 					case DOUBLE:
-						cout << "DOUBLE CASE entered"<< endl;
+						// cout << "DOUBLE CASE entered"<< endl;
 						userTotal -= BASEBET;
 						currentBet = BASEBET * 2;
 						userHand[a].push_back(deck.draw());
@@ -441,7 +296,7 @@ int main (int argc, char *argv[]) {
 						break;
 
 					case SPLIT:
-						cout << "SPLIT CASE entered"<< endl;
+						// cout << "SPLIT CASE entered"<< endl;
 						if (a < 3) {
 							splitBool = true;
 							// double the bet
@@ -457,12 +312,12 @@ int main (int argc, char *argv[]) {
 						break;
 
 					case SURRENDER:
-						cout << "SURRENDER CASE entered"<< endl;
+						// cout << "SURRENDER CASE entered"<< endl;
 						handDone = true;
 						surrender = true;
 						break;
 					default:
-						cout << "defaulted, a = " << a << endl;
+						// cout << "defaulted, a = " << a << endl;
 						handDone = true;
 
 						break;
@@ -486,33 +341,33 @@ int main (int argc, char *argv[]) {
 				}
 			}
 		}
-		cout << "dealerHand -----: ";
-		for(int debugA :dealerHand) {
-			cout << debugA << " ";
-		}
-		cout << endl;
+		// cout << "dealerHand -----: ";
+		// for(int debugA :dealerHand) {
+		// 	cout << debugA << " ";
+		// }
+		// cout << endl;
 
-		// Print all the hands after the game
-		cout << "userhand[0]: ";
-		for(int debugA :userHand[0]) {
-			cout << debugA << " ";
-		}
-		cout << endl;
-		cout << "userhand[1]: ";
-		for(int debugA :userHand[1]) {
-			cout << debugA << " ";
-		}
-		cout << endl;
-		cout << "userhand[2]: ";
-		for(int debugA :userHand[2]) {
-			cout << debugA << " ";
-		}
-		cout << endl;
-		cout << "userhand[3]: ";
-		for(int debugA :userHand[3]) {
-			cout << debugA << " ";
-		}
-		cout << endl;
+		// // Print all the hands after the game
+		// cout << "userhand[0]: ";
+		// for(int debugA :userHand[0]) {
+		// 	cout << debugA << " ";
+		// }
+		// cout << endl;
+		// cout << "userhand[1]: ";
+		// for(int debugA :userHand[1]) {
+		// 	cout << debugA << " ";
+		// }
+		// cout << endl;
+		// cout << "userhand[2]: ";
+		// for(int debugA :userHand[2]) {
+		// 	cout << debugA << " ";
+		// }
+		// cout << endl;
+		// cout << "userhand[3]: ";
+		// for(int debugA :userHand[3]) {
+		// 	cout << debugA << " ";
+		// }
+		// cout << endl;
 
 		// After going through all the hands determine the winning amounts of each hand
 		int dealerSum = sumOfVector(dealerHand);
@@ -557,7 +412,11 @@ int main (int argc, char *argv[]) {
 		}
 		dealerHand.clear();
 		cout << userTotal << endl;
+		if (userTotal < lowest) {
+			lowest = userTotal;
+		}
 	}
+	printStats(userTotal,lowest);
 // END DEBUG
 
 
@@ -572,6 +431,8 @@ int main (int argc, char *argv[]) {
 	//      else if split
 	//			
 	// 		if not stand or surrender check if bust, if not go back to 4
+
+
 
 	return 0;
 }
