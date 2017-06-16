@@ -61,7 +61,7 @@ int ChartParser::query(vector<int> & cards, vector<int> & dealerCards, bool spli
 	if(cards.size() == 2) {
 		if (cards[0]==cards[1]) {
 
-			ret = table[cards[0]+21][dealerCards[0]-2];
+			ret = table[cards[0]+22][dealerCards[0]-2];
 			if (split) {
 				if (ret == DOUBLE) {
 					ret = HIT;
