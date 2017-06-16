@@ -1,8 +1,11 @@
 #include <iostream>
 #include <vector>
 #include "Deck.h"
+#include "ChartParser.h"
 // #include <cstdlib>
 // #include <ctime>
+
+#define TEST
 
 #define HIT 0
 #define STAND 1
@@ -33,8 +36,7 @@ using namespace std;
 // DONE
 // do we need to see what happens if we get a 21, does the dealer get to draw til 5 card? inconsequential as nat beats 5 card
 // can the dealer get 5 card charlies? YES
-	
-
+// dealer keeps playing after we get 5 card 
 
 
 int sumOfVector(vector<int> & cards) {
@@ -239,8 +241,93 @@ int determineAction(vector<int> & cards, vector<int> & dealerCards, bool s) {
 
 
 
+#ifdef TEST
+int main (int argc, char *argv[]) {
+	cout << "Entered Testing" << endl;
+	ChartParser cp;
+	cp.load("testin");
+	vector<int> dealerHand;
+	vector<int> userHand;
 
-int main () {
+	// test case no split, pair
+	userHand.push_back(4);
+	userHand.push_back(4);
+	dealerHand.push_back(3);
+	cout << cp.query(userHand, dealerHand, 0) << endl; // expected 0
+
+	// test case no split, sum = 9
+	userHand.clear();
+	dealerHand.clear();
+	userHand.push_back(3);
+	userHand.push_back(6);
+	dealerHand.push_back(2);
+	cout << cp.query(userHand, dealerHand, 0) << endl; // expected 0
+
+	// test case no split, sum = 10
+	userHand.clear();
+	dealerHand.clear();
+	userHand.push_back(6);
+	userHand.push_back(4);
+	dealerHand.push_back(2);
+	cout << cp.query(userHand, dealerHand, 0) << endl; // expected 2
+
+	// test case no split, 3 cards, sum = 12
+	userHand.clear();
+	dealerHand.clear();
+	userHand.push_back(6);
+	userHand.push_back(4);
+	userHand.push_back(2);
+	dealerHand.push_back(2);
+	cout << cp.query(userHand, dealerHand, 0) << endl; // expected 0
+
+	// test case no split, 3 cards, sum = 13
+	userHand.clear();
+	dealerHand.clear();
+	userHand.push_back(6);
+	userHand.push_back(4);
+	userHand.push_back(3);
+	dealerHand.push_back(2);
+	cout << cp.query(userHand, dealerHand, 0) << endl; // expected 1
+
+
+	// test case split, 2 cards, sum = 10
+	userHand.clear();
+	dealerHand.clear();
+	userHand.push_back(6);
+	userHand.push_back(4);
+	dealerHand.push_back(2);
+	cout << cp.query(userHand, dealerHand, 1) << endl; // expected 0
+
+
+	// test case split, 2 cards, sum = 16, dealer =9
+	userHand.clear();
+	dealerHand.clear();
+	userHand.push_back(10);
+	userHand.push_back(6);
+	dealerHand.push_back(9);
+	cout << cp.query(userHand, dealerHand, 1) << endl; // expected 1
+
+	// test case no split, 2 cards, sum = 10, dealer =10
+	userHand.clear();
+	dealerHand.clear();
+	userHand.push_back(7);
+	userHand.push_back(3);
+	dealerHand.push_back(10);
+	cout << cp.query(userHand, dealerHand, 0) << endl; // expected 0
+
+	// test case no split, 2 cards, sum = 10, dealer =9
+	userHand.clear();
+	dealerHand.clear();
+	userHand.push_back(7);
+	userHand.push_back(3);
+	dealerHand.push_back(9);
+	cout << cp.query(userHand, dealerHand, 0) << endl; // expected 2
+
+	// cout << (cp.table[11][8]) << endl;
+	return 0;
+}
+#else 
+int main (int argc, char *argv[]) {
 
 
 	// parse the input here
@@ -389,9 +476,14 @@ int main () {
 				dealNeeded = true;
 			}
 		}
+		int dealerFive = 0;
 		if (dealNeeded) {
 			while (sumOfVector(dealerHand) < 17) {
 				dealerHand.push_back(deck.draw());
+				if ((dealerHand.size()==5) && (sumOfVector(dealerHand) <= 21)){
+					dealerFive = 1;
+					break;
+				}
 			}
 		}
 		cout << "dealerHand -----: ";
@@ -429,7 +521,11 @@ int main () {
 			if (userBust[a] == false) {
 				// 5 card
 				if ((userHand[a].size()==5) && (!((dealerSum == 21)&&(dealerHand.size()==2)))){
-					userTotal+=currentBet*2;
+					if (!dealerFive) {
+						userTotal+=currentBet*2;
+					} else {
+						userTotal+=currentBet;
+					}
 				} else if (((curHandTotal == 21)&&(userHand[a].size()==2)) && (!((dealerSum == 21)&&(dealerHand.size()==2))) )  {
 					// natural 21 and dealer doesn't have nat 21
 					userTotal+=currentBet * 2.5;
@@ -439,10 +535,14 @@ int main () {
 				} else if (dealerSum > 21) { // dealer bust
 					userTotal+=currentBet*2;
 				} else if (dealerSum < curHandTotal) { // user hand is bigger
-					userTotal+=currentBet*2;
+					if (!dealerFive) {
+						userTotal+=currentBet*2;
+					}
 				} else if (dealerSum == curHandTotal) {
 					if (!(((dealerSum == 21) && (dealerHand.size()==2)))) { // if both hands are equal and dealer no nat 21
-						userTotal+=currentBet;
+						if (!dealerFive) {
+							userTotal+=currentBet;
+						}
 					}
 				} else if (surrender) {
 					userTotal+=currentBet*0.5;
@@ -475,3 +575,5 @@ int main () {
 
 	return 0;
 }
+
+#endif
