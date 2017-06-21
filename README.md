@@ -6,14 +6,14 @@ With the current program simulation it looks like it is beatable. There are a fe
 
 # Why I think the in game casino may be in our favor
 
-![Nash Beats the Casino](https://github.com/WizardRubic/TornBlackJackTest/blob/master/nashWins.png "Nash Beats the Casino")
+![Nash Beats the Casino](https://github.com/WizardRubic/TornBlackJackTest/blob/testmake/res/nashWins.png "Nash Beats the Casino")
 
 For the non-torn player: these are VERY large amounts of torn money xD
 
 https://www.torn.com/forums.php#!p=threads&f=2&t=15985799&b=0&a=0&start=20&to=17328277
-![Nash Claim 1](https://github.com/WizardRubic/TornBlackJackTest/blob/master/nashPost1.png "Nash Claim 1")
+![Nash Claim 1](https://github.com/WizardRubic/TornBlackJackTest/blob/testmake/res/nashPost1.png "Nash Claim 1")
 https://www.torn.com/forums.php#!p=threads&f=2&t=15985799&b=0&a=0&start=20&to=17328547
-![Nash Claim 2](https://github.com/WizardRubic/TornBlackJackTest/blob/master/nashPost2.png "Nash Claim 2")
+![Nash Claim 2](https://github.com/WizardRubic/TornBlackJackTest/blob/testmake/res/nashPost2.png "Nash Claim 2")
 
 
 # Torn's Black jack rules:
