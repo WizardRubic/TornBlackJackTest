@@ -24,18 +24,35 @@ using namespace std;
 
 
 // TOOD
-// Fix the split glitch
-// Replace determineAction!
-	// take in an actual chart
-	// first hand deal with aces after don't
-// need to make it so 5 card charlie loses to dealer nat 21? yes, our 5 card will lose to their 21.
-// TODO make it so 5 card charlie on dealer beats what w/e we got
-// see split rules about what's allowed
-// second hand can split
+// torn has strange split rules. 
+// example:
+// dealer: A-x
+// user: 88
+// user splits:
+// user[0]: 8-5
+// user[1]: 8-3
+// user[0] hand is not allowed to double or surrender and the dealer plays his hand after user[0] is resolved
+// user[1] then goes. this time the dealer has A-x except x is faceup and user[1] is allowed to double or surrender.
+
+	// consider building a chart of the second case, optimal strat when we know both cards
+
+// Test the following combos:
+
+// add stats to show money win/loss ratio
 
 
 
 // DONE
+// need to make it so 5 card charlie loses to dealer nat 21? yes, our 5 card will lose to their 21.
+// TODO make it so 5 card charlie on dealer beats what w/e we got
+// see split rules about what's allowed
+// second hand can split
+	// i've decided to ignore cases of splits past the first one since they're rare enough for it to only marginally affect the results.
+	
+// Fix the split glitch
+// Replace determineAction!
+	// take in an actual chart
+	// first hand deal with aces after don't
 // do we need to see what happens if we get a 21, does the dealer get to draw til 5 card? inconsequential as nat beats 5 card
 // can the dealer get 5 card charlies? YES
 // dealer keeps playing after we get 5 card 
