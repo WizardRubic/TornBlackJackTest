@@ -1,7 +1,7 @@
 # TornBlackJackTest
 I am testing whether torn.com online game blackjack is beatable using a simulation.
 
-With the current program simulation it looks like it is beatable. There are a few glitches and it was very hacky and inefficient code. 
+With the current program simulation it looks like it is beatable. 
 
 
 # Why I think the in game casino may be in our favor
