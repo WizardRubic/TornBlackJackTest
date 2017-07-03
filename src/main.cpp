@@ -17,7 +17,7 @@
 #define ACE 11
 
 #define BASEBET 20
-#define TOKENS 1000000
+#define TOKENS 200000000
 #define STARTTOTAL 2000
 
 using namespace std;
@@ -96,8 +96,10 @@ int sumOfVector(vector<int> & cards) {
 void printStats(double userTotal, double lowest) {
 	cout << "Tokens Spent:   " << TOKENS << endl;
 	cout << "Basebet:        " << BASEBET << endl;
-	double ev = BASEBET + (double)((userTotal - STARTTOTAL))/TOKENS;
+	double profit = (double)((userTotal - STARTTOTAL))/TOKENS;
+	double ev = BASEBET + profit;
 	cout << "EV of each bet: " << ev << endl;
+	cout << "Profit/hand:    " << profit << endl;
 	cout << "Starting total: " << STARTTOTAL << endl;
 	cout << "Lowest point:   " << lowest << endl;
 	cout << "Ending Total:   " << userTotal << endl;
@@ -187,6 +189,15 @@ int main (int argc, char *argv[]) {
 	dealerHand.push_back(9);
 	cout << cp.query(userHand, dealerHand, 0) << endl; // expected 2
 
+	// test case no split, 2 cards, sum = 10, dealer =9
+	userHand.clear();
+	dealerHand.clear();
+	userHand.push_back(4);
+	userHand.push_back(9);
+	userHand.push_back(3);
+	dealerHand.push_back(10);
+	cout << cp.query(userHand, dealerHand, 0) << endl; // expected 0
+
 	// cout << (cp.table[11][8]) << endl;
 	return 0;
 }
@@ -231,7 +242,7 @@ int main (int argc, char *argv[]) {
 
 	double lowest = STARTTOTAL;
 
-
+	bool splitBool = false; // split
 	for(int y = 0; y<TOKENS; y++) {
 		splitTo = 1;
 		// cout << "----------------- NEW HAND ------------" << endl;
@@ -254,7 +265,7 @@ int main (int argc, char *argv[]) {
 		// Every loop must call determineAction with the current hand
 		// Then it makes a decision 
 		bool surrender = false;
-		bool splitBool = false; // split
+		splitBool = false; // split
 		for (int a = 0; userHand[a].size()>=2 && a<4; a++) {
 			// cout << "entered a = " << a << endl;
 			handDone = false;
@@ -428,7 +439,7 @@ int main (int argc, char *argv[]) {
 			userHand[d].clear();
 		}
 		dealerHand.clear();
-		cout << userTotal << endl;
+		// cout << userTotal << endl;
 		if (userTotal < lowest) {
 			lowest = userTotal;
 		}
