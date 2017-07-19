@@ -46,7 +46,7 @@ public class Deck {
             return -1;
         }
         int pos = random.nextInt(left.size());
-        int ret = left.get(pos);
+        ret = left.get(pos);
         left.remove(pos);
         used.add(ret);
         if (ret == 1) {
