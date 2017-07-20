@@ -16,6 +16,7 @@ public class BlackjackMain {
         StateMachine sm = new StateMachine();
         Decision decision = new Decision();
         Action action;
+        int curFirstHand = 0;
         int iterations = 0;
         int tokens = 1;
 
@@ -90,8 +91,11 @@ public class BlackjackMain {
                     sm.setState(State.DEDUCT_BASEBET_1);
                     break; 
                 case SPLIT_4:
+                    curFirstHand = 0;
                     // Create 2 hands
                     hands.get(1).add(hands.get(0).remove(0));
+                    hands.get(0).add(deck.draw());
+                    hands.get(1).add(deck.draw());
                     // Advance state
                     sm.setState(State.HANDLE_FIRST_7);
                     break;
@@ -296,7 +300,13 @@ public class BlackjackMain {
                     sm.setState(State.HANDLE_SECOND_22);
                     break;
                 case HANDLE_SECOND_22:
-                    
+                    // Clear out dealer hands
+                    // Query chart
+                    action = decision.determineUserAction(hands.get(curFirstHand+1),dealerHand,false);
+                    // Change state
+                    switch(action) {
+
+                    }
                     break;
                 case REFUND_23:
                     break;
