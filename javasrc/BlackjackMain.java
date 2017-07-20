@@ -15,7 +15,7 @@ public class BlackjackMain {
         User user = new User(0);
         StateMachine sm = new StateMachine();
         Decision decision = new Decision();
-
+        Action action;
         int iterations = 0;
         int tokens = 1;
 
@@ -23,8 +23,13 @@ public class BlackjackMain {
         ArrayList<Integer> dealerHand = new ArrayList<Integer>();
         prepareHands(hands);
         // hands.get(0).add(2);
+        dealerHand.add(11);
+        dealerHand.add(11);
+        dealerHand.add(10);
 
-        boolean done=false;
+        System.out.printf("|%s|",decision.determineDealerAction(dealerHand).toString());
+        // boolean done=false;
+        boolean done=true;
         while(done == false) {
             switch (sm.getState()) {
                 case DEDUCT_BASEBET_1: 
@@ -49,14 +54,13 @@ public class BlackjackMain {
                     break;
                 case DEAL_INITIAL_CARDS_2:
                     System.out.printf("In state 2\n");
-                    done = true;
                     // Give user 2 cards
                     hands.get(0).add(deck.draw());
                     hands.get(0).add(deck.draw());
                     // Give dealer 1
                     dealerHand.add(deck.draw());
                     // Query chart
-                    Action action = decision.determineUserAction(hands.get(0), dealerHand, false);
+                    action = decision.determineUserAction(hands.get(0), dealerHand, false);
                     // Advance state
                     switch(action) {
                         case HIT:
@@ -81,16 +85,65 @@ public class BlackjackMain {
                     }   
                     break;
                 case REFUND_3:
+                    // refund 0.5
+                    user.changeCash(BASEBET*0.5);
+                    sm.setState(State.DEDUCT_BASEBET_1);
                     break; 
                 case SPLIT_4:
+                    // Create 2 hands
+                    hands.get(1).add(hands.get(0).remove(0));
+                    // Advance state
+                    sm.setState(State.HANDLE_FIRST_7);
                     break;
                 case DEAL_CARD_5:
+                    // Draw a card
+                    hands.get(0).add(deck.draw());
+                    // Query for next action
+                    action = decision.determineUserAction(hands.get(0), dealerHand, false);
+                    // Advance state
+                    switch(action) {
+                        case HIT:
+                            sm.setState(State.DEAL_CARD_5);
+                            break;
+                        case STAND:
+                            sm.setState(State.DET_DEALER_ACTION_6);
+                            break;
+                        default:
+                            System.out.printf("broken switch state, possible cause, non hit or stand");
+                            break;
+                    }
                     break; 
                 case DET_DEALER_ACTION_6:
+                    action = decision.determineDealerAction(dealerHand);
+                    switch(action) {
+                        case HIT:
+                            sm.setState(State.DEALER_DRAW_8);
+                            break;
+                        case STAND:
+                            sm.setState(State.DET_WINNER_9);
+                            break;
+                        default:
+                            System.out.printf("broken switch state, possible cause, non hit or stand");
+                            break;
+                    }
                     break;
                 case HANDLE_FIRST_7:
+                    action = decision.determineUserAction(hands.get(0), dealerHand, true);
+                    switch(action) {
+                        case HIT:
+                            sm.setState(State.DEAL_CARD_10);
+                            break;
+                        case STAND:
+                            sm.setState(State.DET_DEALER_ACTION_11);
+                            break;
+                        default:
+                            System.out.printf("broken switch state, possible cause, non hit or stand");
+                            break;
+                    }
                     break;
                 case DEALER_DRAW_8:
+                    dealerHand.add(deck.draw());
+                    sm.setState(State.DET_DEALER_ACTION_6);
                     break;
                 case DET_WINNER_9:
                     break;
