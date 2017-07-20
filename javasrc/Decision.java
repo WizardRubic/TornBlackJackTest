@@ -4,8 +4,8 @@ class Decision {
     
     // DetermineDealerAction()
     // Returns what action the dealer should take
-    public Action determineDealerAction(ArrayList<Integer> UserHand) {
-        if (sumOfArrayList(UserHand) < 17) {
+    public Action determineDealerAction(ArrayList<Integer> dealerHand) {
+        if (sumOfArrayList(dealerHand) < 17) {
         	return Action.HIT;
     	} else {
     		return Action.STAND;
@@ -14,8 +14,8 @@ class Decision {
     
     // DetermineUserAction()
     // Determine what action the user should take
-    // hitAndStandOnly indicates if first or second hand of a split
-    public Action determineUserAction(ArrayList<Integer> UserHand, ArrayList<Integer> DealerHand, boolean hitAndStandOnly) {
+    // hitAndStandOnly indicates if first or second hand of a split, can only hit and stand if first hand
+    public Action determineUserAction(ArrayList<Integer> userHand, ArrayList<Integer> dealerHand, boolean hitAndStandOnly) {
         return Action.HIT;
     }
     
