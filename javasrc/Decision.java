@@ -39,7 +39,7 @@ class Decision {
 
     // determineWinner() 
     // returns a multiplier for the amount won, x0, x1, x2, x2.5
-    public double determineWinner() {
+    public double determineWinner(ArrayList<Integer> userHand, ArrayList<Integer> dealerHand) {
     	return 0;
     }
 }
