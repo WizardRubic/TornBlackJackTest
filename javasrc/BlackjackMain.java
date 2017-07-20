@@ -224,26 +224,79 @@ public class BlackjackMain {
                     }
                     break;
                 case DEALER_DRAW_12:
+                    // Dealer draw
+                    // Change states
                     break;
                 case PLUS_13:
+                    // increase user total
+                    user.changeCash(0.0);
+                    // Change states
+                    sm.setState(State.DEDUCT_BASEBET_1);
                     break;
                 case PLUS_14:
+                    // increase user total
+                    user.changeCash(1.0);
+                    // Change states
+                    sm.setState(State.DEDUCT_BASEBET_1);
                     break;
                 case PLUS_15:
+                    // increase user total
+                    user.changeCash(2.0);
+                    // Change states
+                    sm.setState(State.DEDUCT_BASEBET_1);
                     break;
                 case PLUS_16:
+                    // increase user total
+                    user.changeCash(2.5);
+                    // Change states
+                    sm.setState(State.DEDUCT_BASEBET_1);
                     break;
                 case DET_WINNER_17:
+                    // Switch states
+                    switch(determineWinner(hands.get(0)), dealerHand) {
+                        case 0.0:
+                            sm.setState(State.PLUS_18);
+                            break;
+                        case 1.0:
+                            sm.setState(State.PLUS_19);
+                            break;
+                        case 2.0:
+                            sm.setState(State.PLUS_20);
+                            break;
+                        case 2.5:
+                            sm.setState(State.PLUS_21);
+                            break;
+                        default:
+                            System.out.printf("DET_WINNER_17 switch broken");
+                            break;
+                    }
                     break;
                 case PLUS_18:
+                    // increase user total
+                    user.changeCash(0.0);
+                    // Change states
+                    sm.setState(State.HANDLE_SECOND_22);
                     break;
                 case PLUS_19:
+                    // increase user total
+                    user.changeCash(1.0);
+                    // Change states
+                    sm.setState(State.HANDLE_SECOND_22);
                     break;
                 case PLUS_20:
+                    // increase user total
+                    user.changeCash(2.0);
+                    // Change states
+                    sm.setState(State.HANDLE_SECOND_22);
                     break;
                 case PLUS_21:
+                    // increase user total
+                    user.changeCash(2.5);
+                    // Change states
+                    sm.setState(State.HANDLE_SECOND_22);
                     break;
                 case HANDLE_SECOND_22:
+                    
                     break;
                 case REFUND_23:
                     break;
