@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <sstream>
+
 #include "Deck.h"
 #include "ChartParser.h"
 // #include <cstdlib>
@@ -17,7 +19,7 @@
 #define ACE 11
 
 #define BASEBET 20
-#define TOKENS 200000000
+// #define TOKENS 200
 #define STARTTOTAL 2000
 
 using namespace std;
@@ -93,10 +95,10 @@ int sumOfVector(vector<int> & cards) {
 // Lowest point
 // Ending Total
 
-void printStats(double userTotal, double lowest) {
-	cout << "Tokens Spent:   " << TOKENS << endl;
+void printStats(int tokens, double userTotal, double lowest) {
+	cout << "Tokens Spent:   " << tokens << endl;
 	cout << "Basebet:        " << BASEBET << endl;
-	double profit = (double)((userTotal - STARTTOTAL))/TOKENS;
+	double profit = (double)((userTotal - STARTTOTAL))/tokens;
 	double ev = BASEBET + profit;
 	cout << "EV of each bet: " << ev << endl;
 	cout << "Profit/hand:    " << profit << endl;
@@ -203,24 +205,9 @@ int main (int argc, char *argv[]) {
 }
 #else 
 int main (int argc, char *argv[]) {
-
-
-	// parse the input here
-	// look up hand in the chart? represent the chart as an array?
-
-
 	cout << "Entered Main" << endl;
-
-	
-	// Deck deck;
-	// for (int i=0; i<52; i++) {
-	// 	cout << deck.draw() << endl;
-	// }
-	
-// assume every 25 cards we shuffle the deck again
-
-	if (argc!=2) {
-		cout << "USAGE: bjsim.exe <chartFileFromSheets>"<<endl;
+	if (argc!=3) {
+		cout << "USAGE: bjsim.exe <# of tokens> <chartFileFromSheets>"<<endl;
 		return 0;
 	}
 
@@ -229,7 +216,10 @@ int main (int argc, char *argv[]) {
 	vector<int> dealerHand;
 	vector<int> userHand[4]; // userHands[1] to 3 only get used if split
 	ChartParser cp;// make a chart parser
-	cp.load(argv[1]);
+	cp.load(argv[2]);
+	int tokens;
+	stringstream t(argv[1]);
+	t >> tokens;
 
 	double userTotal=STARTTOTAL;
 
@@ -243,21 +233,25 @@ int main (int argc, char *argv[]) {
 	double lowest = STARTTOTAL;
 
 	bool splitBool = false; // split
-	for(int y = 0; y<TOKENS; y++) {
+	for(int y = 0; y<tokens; y++) {
 		splitTo = 1;
-		// cout << "----------------- NEW HAND ------------" << endl;
+		
+		// cout << "----------------- NEW HAND ------------" << endl; // Print output
+
 		// Deal initial 3 cards and take the bet
 		userHand[0].push_back(deck.draw());
 		userHand[0].push_back(deck.draw());
 		dealerHand.push_back(deck.draw());
 		userTotal -= BASEBET;
 		dealNeeded = false;
-		
+
+		//  // Print output		
 		// cout << "dealerHand: ";
 		// for(int debugA :dealerHand) {
 		// 	cout << debugA << " ";
 		// }
 		// cout << endl;
+		//  // End print output
 
 		currentBet = BASEBET;
 		
@@ -272,6 +266,8 @@ int main (int argc, char *argv[]) {
 			userBust[a] = false;
 			// loop til current hand is finished
 			while (!handDone) {
+
+				// // Print output		
 				// cout << "userhand[0]: ";
 				// for(int debugA :userHand[0]) {
 				// 	cout << debugA << " ";
@@ -292,6 +288,8 @@ int main (int argc, char *argv[]) {
 				// 	cout << debugA << " ";
 				// }
 				// cout << endl;
+				// // End Print output		
+
 				switch(cp.query(userHand[a], dealerHand, splitBool)) {
 					case HIT:
 						// cout << "HIT CASE entered"<< endl;
@@ -355,7 +353,7 @@ int main (int argc, char *argv[]) {
 		}
 		// Determine if deal is needed
 		for (int a = 0; userHand[a].size()>=2 && a<4; a++ ) {
-			if (userBust[a] == false) {
+			if ((userBust[a] == false) && (surrender == false)) {
 				dealNeeded = true;
 			}
 		}
@@ -369,38 +367,44 @@ int main (int argc, char *argv[]) {
 				}
 			}
 		}
-		// cout << "dealerHand -----: ";
-		// for(int debugA :dealerHand) {
-		// 	cout << debugA << " ";
-		// }
-		// cout << endl;
+// // Print output		
+// 		cout << "dealerHand -----: ";
+// 		for(int debugA :dealerHand) {
+// 			cout << debugA << " ";
+// 		}
+// 		cout << endl;
 
-		// // Print all the hands after the game
-		// cout << "userhand[0]: ";
-		// for(int debugA :userHand[0]) {
-		// 	cout << debugA << " ";
-		// }
-		// cout << endl;
-		// cout << "userhand[1]: ";
-		// for(int debugA :userHand[1]) {
-		// 	cout << debugA << " ";
-		// }
-		// cout << endl;
-		// cout << "userhand[2]: ";
-		// for(int debugA :userHand[2]) {
-		// 	cout << debugA << " ";
-		// }
-		// cout << endl;
-		// cout << "userhand[3]: ";
-		// for(int debugA :userHand[3]) {
-		// 	cout << debugA << " ";
-		// }
-		// cout << endl;
+// 		// Print all the hands after the game
+// 		cout << "userhand[0]: ";
+// 		for(int debugA :userHand[0]) {
+// 			cout << debugA << " ";
+// 		}
+// 		cout << endl;
+// 		cout << "userhand[1]: ";
+// 		for(int debugA :userHand[1]) {
+// 			cout << debugA << " ";
+// 		}
+// 		cout << endl;
+// 		cout << "userhand[2]: ";
+// 		for(int debugA :userHand[2]) {
+// 			cout << debugA << " ";
+// 		}
+// 		cout << endl;
+// 		cout << "userhand[3]: ";
+// 		for(int debugA :userHand[3]) {
+// 			cout << debugA << " ";
+// 		}
+// 		cout << endl;
+// // End Print output		
 
 		// After going through all the hands determine the winning amounts of each hand
 		int dealerSum = sumOfVector(dealerHand);
 		for (int a = 0; userHand[a].size()>=2 && a<4; a++ ) {
 			int curHandTotal = sumOfVector(userHand[a]);
+			if (surrender == true) {
+				userTotal+=currentBet*0.5;
+				break;
+			}
 			if (userBust[a] == false) {
 				// 5 card
 				if ((userHand[a].size()==5) && (!((dealerSum == 21)&&(dealerHand.size()==2)))){
@@ -427,8 +431,6 @@ int main (int argc, char *argv[]) {
 							userTotal+=currentBet;
 						}
 					}
-				} else if (surrender) {
-					userTotal+=currentBet*0.5;
 				}
 			}
 		}
@@ -439,28 +441,14 @@ int main (int argc, char *argv[]) {
 			userHand[d].clear();
 		}
 		dealerHand.clear();
-		// cout << userTotal << endl;
+// // Print output		
+// 		cout << userTotal << endl;
+// // End Print output		
 		if (userTotal < lowest) {
 			lowest = userTotal;
 		}
 	}
-	printStats(userTotal,lowest);
-// END DEBUG
-
-
-	// cout << userTotal << endl;
-
-	// 1. Shuffle deck
-	// 2. Spit out 1 card from dealer
-	// 3. Spit out 2 cards to user
-	// 4. look at chart w/ function  
-	// 5. take function-specified action
-	// 6. if stand or surrender end player hand
-	//      else if split
-	//			
-	// 		if not stand or surrender check if bust, if not go back to 4
-
-
+	printStats(tokens, userTotal,lowest);
 
 	return 0;
 }
