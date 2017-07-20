@@ -43,15 +43,42 @@ public class BlackjackMain {
                     clearHands(hands);
                     // System.out.printf("|%d|",hands.get(0).size());
                     // System.out.printf("In state 1");
+
+                    // Change states
+                    sm.setState(State.DEAL_INITIAL_CARDS_2);
                     break;
                 case DEAL_INITIAL_CARDS_2:
+                    System.out.printf("In state 2\n");
+                    done = true;
                     // Give user 2 cards
                     hands.get(0).add(deck.draw());
                     hands.get(0).add(deck.draw());
                     // Give dealer 1
-                    hands.get(0).add(deck.draw());
+                    dealerHand.add(deck.draw());
                     // Query chart
-                        // Advance state
+                    Action action = decision.determineUserAction(hands.get(0), dealerHand, false);
+                    // Advance state
+                    switch(action) {
+                        case HIT:
+                            System.out.printf("Hit");
+                            sm.setState(State.DEAL_CARD_5);
+                            break;
+                        case STAND:
+                            sm.setState(State.DET_DEALER_ACTION_6);
+                            break;
+                        case SURRENDER:
+                            sm.setState(State.REFUND_3);
+                            break;
+                        case SPLIT:
+                            sm.setState(State.SPLIT_4);
+                            break;
+                        case DOUBLEDOWN:
+                            sm.setState(State.DEAL_CARD_43);
+                            break;
+                        default:
+                            System.out.printf("broken switch state");
+                            break;
+                    }   
                     break;
                 case REFUND_3:
                     break; 
