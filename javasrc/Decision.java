@@ -2,6 +2,8 @@ import java.util.*;
 
 class Decision {
     
+    private static final int ACE = 11;
+
     // DetermineDealerAction()
     // Returns what action the dealer should take
     public Action determineDealerAction(ArrayList<Integer> dealerHand) {
@@ -24,7 +26,7 @@ class Decision {
         int aces = 0;
         for(int cur : in) {
             total = total + cur;
-            if (cur == 1) {
+            if (cur == ACE) {
             	aces++;
             }
         }
@@ -33,5 +35,11 @@ class Decision {
         	aces--;
         }
         return total;
+    }
+
+    // determineWinner() 
+    // returns a multiplier for the amount won, x0, x1, x2, x2.5
+    public double determineWinner() {
+    	return 0;
     }
 }
