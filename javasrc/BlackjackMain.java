@@ -301,18 +301,43 @@ public class BlackjackMain {
                     break;
                 case HANDLE_SECOND_22:
                     // Clear out dealer hands
+                    for(int i = 0; dealerHand.size()>2; i++) {
+                        dealerHand.remove(2);
+                    }
                     // Query chart
                     action = decision.determineUserAction(hands.get(curFirstHand+1),dealerHand,false);
                     // Change state
                     switch(action) {
-
+                        case HIT:
+                            sm.setState(State.DEAL_CARD_26);
+                            break;
+                        case STAND:
+                            sm.setState(State.DET_DEALER_ACTION_27);
+                            break;
+                        case SURRENDER:
+                            sm.setState(State.REFUND_23);
+                            break;
+                        case SPLIT:
+                            sm.setState(State.SPLIT_24);
+                            break;
+                        case DOUBLEDOWN:
+                            sm.setState(State.DEAL_CARD_25);
+                            break;
+                        default: 
+                            System.out.printf("HANDLE_SECOND_22 broken\n");
+                            break;
                     }
                     break;
                 case REFUND_23:
+                    // Refund
+                    user.changeCash(0.5*BASEBET);
+                    // Change state
+                    sm.setState(State.DEDUCT_BASEBET_1);
                     break;
                 case SPLIT_24:
+                    
                     break;
-                case HANDLE_FIRST_25:
+                case DEAL_CARD_25:
                     break;
                 case DEAL_CARD_26:
                     break;
