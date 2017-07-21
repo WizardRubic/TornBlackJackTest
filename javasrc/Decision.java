@@ -39,7 +39,13 @@ class Decision {
 
     // determineWinner() 
     // returns a multiplier for the amount won, x0, x1, x2, x2.5
-    public double determineWinner(ArrayList<Integer> userHand, ArrayList<Integer> dealerHand) {
+    public double determineWinner(ArrayList<Integer> userHand, ArrayList<Integer> dealerHand, boolean isDouble) {
+        // if double, return 2x vals
+        // Evaluate hand strength
+        // Determine who has stronger hand
+        // if dealer, always 0
+        // if tie ret 1
+        // if user, return 2 or 2.5
     	return 0;
     }
 }
