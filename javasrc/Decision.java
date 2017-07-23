@@ -50,9 +50,7 @@ class Decision {
         // Handle double in main
         // Evaluate hand strength
         int uSum = sumOfArrayList(userHand);
-        System.out.printf("usum:|%d|\n",uSum);
         int dSum = sumOfArrayList(dealerHand);
-        System.out.printf("dsum:|%d|\n",dSum);
         if ((uSum == 21) && (userHand.size()==2)) {
             uHandStr = 25;
         } else if ((uSum <= 21) && (userHand.size()==5)) {
