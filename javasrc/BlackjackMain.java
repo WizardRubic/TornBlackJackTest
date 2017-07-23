@@ -165,17 +165,17 @@ public class BlackjackMain {
                     break;
                 case DET_WINNER_9:
                     // Switch states
-                    switch(determineWinner(hands.get(0)), dealerHand) {
-                        case 0.0:
+                    switch(decision.determineWinner(hands.get(0), dealerHand)) {
+                        case D_00:
                             sm.setState(State.PLUS_13);
                             break;
-                        case 1.0:
+                        case C_10:
                             sm.setState(State.PLUS_14);
                             break;
-                        case 2.0:
+                        case B_20:
                             sm.setState(State.PLUS_15);
                             break;
-                        case 2.5:
+                        case A_25:
                             sm.setState(State.PLUS_16);
                             break;
                         default:
@@ -192,7 +192,7 @@ public class BlackjackMain {
                         break;
                     }
                     // Query table
-                    action = determineUserAction(hands.get(0),dealerHand,true);
+                    action = decision.determineUserAction(hands.get(0),dealerHand,true);
                     // Change state
                     switch(action) {
                         case HIT:
@@ -259,17 +259,17 @@ public class BlackjackMain {
                     break;
                 case DET_WINNER_17:
                     // Switch states
-                    switch(determineWinner(hands.get(0)), dealerHand) {
-                        case 0.0:
+                    switch(decision.determineWinner(hands.get(0), dealerHand)) {
+                        case D_00:
                             sm.setState(State.PLUS_18);
                             break;
-                        case 1.0:
+                        case C_10:
                             sm.setState(State.PLUS_19);
                             break;
-                        case 2.0:
+                        case B_20:
                             sm.setState(State.PLUS_20);
                             break;
-                        case 2.5:
+                        case A_25:
                             sm.setState(State.PLUS_21);
                             break;
                         default:
@@ -468,17 +468,17 @@ public class BlackjackMain {
                     break;
                 case DET_WINNER_33:
                     // Switch states
-                    switch(determineWinner(hands.get(0)), dealerHand) {
-                        case 0.0:
+                    switch(decision.determineWinner(hands.get(0), dealerHand)) {
+                        case D_00:
                             sm.setState(State.PLUS_39);
                             break;
-                        case 1.0:
+                        case C_10:
                             sm.setState(State.PLUS_40);
                             break;
-                        case 2.0:
+                        case B_20:
                             sm.setState(State.PLUS_41);
                             break;
-                        case 2.5:
+                        case A_25:
                             sm.setState(State.PLUS_42);
                             break;
                         default:
@@ -488,17 +488,17 @@ public class BlackjackMain {
                     break;
                 case DET_WINNER_34:
                     // Switch states
-                    switch(determineWinner(hands.get(0)), dealerHand) {
-                        case 0.0:
+                    switch(decision.determineWinner(hands.get(0), dealerHand)) {
+                        case D_00:
                             sm.setState(State.PLUS_35);
                             break;
-                        case 1.0:
+                        case C_10:
                             sm.setState(State.PLUS_36);
                             break;
-                        case 2.0:
+                        case B_20:
                             sm.setState(State.PLUS_37);
                             break;
-                        case 2.5:
+                        case A_25:
                             sm.setState(State.PLUS_38);
                             break;
                         default:
