@@ -40,7 +40,7 @@ class Decision {
 
     // determineWinner() 
     // returns a multiplier for the amount won, x0, x1, x2, x2.5
-    public double determineWinner(ArrayList<Integer> userHand, ArrayList<Integer> dealerHand) {
+    public Winner determineWinner(ArrayList<Integer> userHand, ArrayList<Integer> dealerHand) {
         double ret;
         int uHandStr, dHandStr; 
         // 25 nat 21
@@ -50,7 +50,9 @@ class Decision {
         // Handle double in main
         // Evaluate hand strength
         int uSum = sumOfArrayList(userHand);
+        System.out.printf("usum:|%d|\n",uSum);
         int dSum = sumOfArrayList(dealerHand);
+        System.out.printf("dsum:|%d|\n",dSum);
         if ((uSum == 21) && (userHand.size()==2)) {
             uHandStr = 25;
         } else if ((uSum <= 21) && (userHand.size()==5)) {
@@ -59,9 +61,9 @@ class Decision {
             uHandStr = uSum;
         }
         if ((dSum == 21) && (dealerHand.size()==2)) {
-            dHandStr = 2;
-        } else if (dSum <= 21) && (dealerHand.size()==5)) {
-            dHandStr = 1;
+            dHandStr = 25;
+        } else if ((dSum <= 21) && (dealerHand.size()==5)) {
+            dHandStr = 24;
         } else {
             dHandStr = dSum;
         }
@@ -71,13 +73,13 @@ class Decision {
         // if tie ret 1
         // if user, return 2 or 2.5
         if ((uHandStr == 25) && (dHandStr!=25)) {
-            return 2.5;
+            return Winner.A_25;
         } else if (uHandStr > dHandStr) {
-            return 2.0;
+            return Winner.B_20;
         } else if (uHandStr == dHandStr) {
-            return 1.0;
+            return Winner.C_10;
         } else {
-            return 0.0;
+            return Winner.D_00;
         }
     }
 }
