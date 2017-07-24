@@ -19,6 +19,7 @@ public class BlackjackMain {
         int curFirstHand = 0;
         int iterations = 0;
         int tokens = 1;
+        int dd = 1; // multiplier for double down
 
         ArrayList<ArrayList<Integer>> hands = new ArrayList<ArrayList<Integer>>(4);
         ArrayList<Integer> dealerHand = new ArrayList<Integer>();
@@ -235,25 +236,29 @@ public class BlackjackMain {
                     break;
                 case PLUS_13:
                     // increase user total
-                    user.changeCash(0.0);
+                    user.changeCash(0.0 * dd);
+                    dd = 1;
                     // Change states
                     sm.setState(State.DEDUCT_BASEBET_1);
                     break;
                 case PLUS_14:
                     // increase user total
-                    user.changeCash(1.0);
+                    user.changeCash(1.0 * dd);
+                    dd = 1;
                     // Change states
                     sm.setState(State.DEDUCT_BASEBET_1);
                     break;
                 case PLUS_15:
                     // increase user total
-                    user.changeCash(2.0);
+                    user.changeCash(2.0 * dd);
+                    dd = 1;
                     // Change states
                     sm.setState(State.DEDUCT_BASEBET_1);
                     break;
                 case PLUS_16:
                     // increase user total
-                    user.changeCash(2.5);
+                    user.changeCash(2.5 * dd);
+                    dd = 1;
                     // Change states
                     sm.setState(State.DEDUCT_BASEBET_1);
                     break;
@@ -279,25 +284,29 @@ public class BlackjackMain {
                     break;
                 case PLUS_18:
                     // increase user total
-                    user.changeCash(0.0);
+                    user.changeCash(0.0 * dd);
+                    dd = 1;
                     // Change states
                     sm.setState(State.HANDLE_SECOND_22);
                     break;
                 case PLUS_19:
                     // increase user total
-                    user.changeCash(1.0);
+                    user.changeCash(1.0 * dd);
+                    dd = 1;
                     // Change states
                     sm.setState(State.HANDLE_SECOND_22);
                     break;
                 case PLUS_20:
                     // increase user total
-                    user.changeCash(2.0);
+                    user.changeCash(2.0 * dd);
+                    dd = 1;
                     // Change states
                     sm.setState(State.HANDLE_SECOND_22);
                     break;
                 case PLUS_21:
                     // increase user total
-                    user.changeCash(2.5);
+                    user.changeCash(2.5 * dd);
+                    dd = 1;
                     // Change states
                     sm.setState(State.HANDLE_SECOND_22);
                     break;
@@ -350,6 +359,7 @@ public class BlackjackMain {
                 case DEAL_CARD_25:
                     // Double down
                     user.changeCash(-1*BASEBET);
+                    dd = 2;
                     // Draw a card
                     hands.get(curFirstHand+1).add(deck.draw());
                     // Change state
@@ -508,55 +518,64 @@ public class BlackjackMain {
                     break;
                 case PLUS_35:
                     // increase user total
-                    user.changeCash(0.0);
+                    user.changeCash(0.0 * dd);
+                    dd = 1;
                     // Change states
                     sm.setState(State.DEDUCT_BASEBET_1);
                     break;
                 case PLUS_36:
                     // increase user total
-                    user.changeCash(1.0);
+                    user.changeCash(1.0 * dd);
+                    dd = 1;
                     // Change states
                     sm.setState(State.DEDUCT_BASEBET_1);
                     break;
                 case PLUS_37:
                     // increase user total
-                    user.changeCash(2.0);
+                    user.changeCash(2.0 * dd);
+                    dd = 1;
                     // Change states
                     sm.setState(State.DEDUCT_BASEBET_1);
                     break;
                 case PLUS_38:
                     // increase user total
-                    user.changeCash(2.5);
+                    user.changeCash(2.5 * dd);
+                    dd = 1;
                     // Change states
                     sm.setState(State.DEDUCT_BASEBET_1);
                     break;
                 case PLUS_39:
                     // increase user total
-                    user.changeCash(0.0);
+                    user.changeCash(0.0 * dd);
+                    dd = 1;
                     // Change states
                     sm.setState(State.HANDLE_SECOND_22);
                     break;
                 case PLUS_40:
                     // increase user total
-                    user.changeCash(1.0);
+                    user.changeCash(1.0 * dd);
+                    dd = 1;
                     // Change states
                     sm.setState(State.HANDLE_SECOND_22);
                     break;
                 case PLUS_41:
                     // increase user total
-                    user.changeCash(2.0);
+                    user.changeCash(2.0 * dd);
+                    dd = 1;
                     // Change states
                     sm.setState(State.HANDLE_SECOND_22);
                     break;
                 case PLUS_42:
                     // increase user total
-                    user.changeCash(2.5);
+                    user.changeCash(2.5 * dd);
+                    dd = 1;
                     // Change states
                     sm.setState(State.HANDLE_SECOND_22);
                     break;
                 case DEAL_CARD_43:
                     // Double down
                     user.changeCash(-1*BASEBET);
+                    dd = 2;
                     // Draw a card
                     hands.get(0).add(deck.draw());
                     // Change state
