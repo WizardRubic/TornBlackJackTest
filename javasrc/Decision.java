@@ -18,6 +18,13 @@ class Decision {
     // Determine what action the user should take
     // hitAndStandOnly indicates if first or second hand of a split, can only hit and stand if first hand
     public Action determineUserAction(ArrayList<Integer> userHand, ArrayList<Integer> dealerHand, boolean hitAndStandOnly) {
+        // if userhand is size 3 or greater and has at least one ace in it
+        // if non weak aces eval to 10 or under use 2 card version
+        // if 4 cards use 4 card version
+        // else eval as sum of all, or 4 card chart 
+
+
+
         return Action.HIT;
     }
     
@@ -34,6 +41,19 @@ class Decision {
         while ((total>21) && (aces>0)) {
         	total-=10;
         	aces--;
+        }
+        return total;
+    }
+
+    // Evals at lowest possible value
+    private int lowSumOfArrayList(ArrayList<Integer> in) {
+        int total = 0;
+        for(int cur : in) {
+            if (cur == ACE) {
+                total++;
+            } else {
+                total = total + cur;
+            }
         }
         return total;
     }
