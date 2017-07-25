@@ -3,6 +3,11 @@ import java.util.*;
 class Decision {
     
     private static final int ACE = 11;
+    private ChartParser cp;
+
+    public Decision(String in) {
+        cp = new ChartParser(in);
+    }
 
     // DetermineDealerAction()
     // Returns what action the dealer should take
@@ -23,7 +28,13 @@ class Decision {
         // if 4 cards use 4 card version
         // else eval as sum of all, or 4 card chart 
 
-
+        int uHandSize = userHand.size();
+        int dHandSize = dealerHand.size();
+        int uLowSum = lowSumOfArrayList(userHand);
+        int dHighSum = sumOfArrayList(dealerHand);
+        boolean dAce[2]; // true if dealer has ace, only used if dealer has 2 cards
+        if ()
+        
 
         return Action.HIT;
     }
@@ -46,7 +57,7 @@ class Decision {
     }
 
     // Evals at lowest possible value
-    private int lowSumOfArrayList(ArrayList<Integer> in) {
+    public int lowSumOfArrayList(ArrayList<Integer> in) {
         int total = 0;
         for(int cur : in) {
             if (cur == ACE) {
