@@ -108,6 +108,10 @@ public class BlackjackMain {
                         sm.setState(State.DET_DEALER_ACTION_6);
                         break;
                     }
+                    // Check if bust
+                    if(decision.lowSumOfArrayList(hands.get(0)) > 21) {
+                        sm.setState(State.DET_DEALER_ACTION_6);
+                    }
                     // Query for next action
                     action = decision.determineUserAction(hands.get(0), dealerHand, true);
                     // Advance state
@@ -191,6 +195,10 @@ public class BlackjackMain {
                     if(hands.get(0).size()==5) {
                         sm.setState(State.DET_DEALER_ACTION_11);
                         break;
+                    }
+                    // Check if bust
+                    if(decision.lowSumOfArrayList(hands.get(0)) > 21) {
+                        sm.setState(State.DET_DEALER_ACTION_11);
                     }
                     // Query table
                     action = decision.determineUserAction(hands.get(0),dealerHand,true);
@@ -366,12 +374,16 @@ public class BlackjackMain {
                     sm.setState(State.DET_DEALER_ACTION_27);
                     break;
                 case DEAL_CARD_26:
+                    // Draw a card
+                    hands.get(curFirstHand+1).add(deck.draw());
                     // Check if 5 card
                     if(hands.get(curFirstHand+1).size()==5) {
                         sm.setState(State.DET_DEALER_ACTION_27);
                     }
-                    // Draw a card
-                    hands.get(curFirstHand+1).add(deck.draw());
+                    // Check if bust
+                    if(decision.lowSumOfArrayList(hands.get(curFirstHand+1)) > 21) {
+                        sm.setState(State.DET_DEALER_ACTION_27);
+                    }
                     // Query chart
                     action = decision.determineUserAction(hands.get(curFirstHand+1),dealerHand,true);
                     // Change state
@@ -448,6 +460,10 @@ public class BlackjackMain {
                     if (hands.get(0).size() == 5) {
                         sm.setState(State.DET_DEALER_ACTION_29);
                         break;
+                    }
+                    // Check if bust
+                    if(decision.lowSumOfArrayList(hands.get(curFirstHand)) > 21) {
+                        sm.setState(State.DET_DEALER_ACTION_27);
                     }
                     // Query for next action
                     action = decision.determineUserAction(hands.get(0), dealerHand, true);
