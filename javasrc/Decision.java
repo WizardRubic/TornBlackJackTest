@@ -32,13 +32,52 @@ class Decision {
         int dHandSize = dealerHand.size();
         int uLowSum = lowSumOfArrayList(userHand);
         int dHighSum = sumOfArrayList(dealerHand);
-        boolean dAce[2]; // true if dealer has ace, only used if dealer has 2 cards
-        if ()
-        
+        boolean dAce[2]; // only set to non zero if there is an ace in dealer hand 
+        boolean uAce[5];
+        int val, x, y;
+        // Mark the aces 
+        for (int i = 0; i < 5; i++) {
+            val = dealerHand.get(i);
+            if (val==11) {
+                dAce[i] = true;
+            } else {
+                dAce[i] = false;
+            }
+        }
+        for (int i = 0; i < 2; i++) {
+            val = userHand.get(i);
+            if (val==11) {
+                uAce[i] = true;
+            } else {
+                uAce[i] = false;
+            }
+        }
+
+
+        // quad 1 of chart
+        if ((uHandSize == 2) && (dHandSize==1)) {
+            // x value is dealer's card val-2 
+            x = dealerHand.get(0) - 2;
+            // y value is determined by whether ace is present in hand
+                // whether pair
+                // else combined total
+
+        }
+
 
         return Action.HIT;
     }
-    
+    // returns if a bool array has a true element
+    private boolean doesArrayHaveTrue(boolean arg[]) {
+        for (boolean a : arg) {
+            if (a == true) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     // Evals at highest possible value
     private int sumOfArrayList(ArrayList<Integer> in) {
         int total = 0;
