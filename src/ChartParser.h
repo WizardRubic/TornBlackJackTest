@@ -27,7 +27,7 @@ class ChartParser {
 		virtual ~ChartParser();
 	private:
 		vector<vector<int>> table; 
-		sumOfVector(vector<int> & cards);
+		int sumOfVector(vector<int> & cards);
 
 };
 
