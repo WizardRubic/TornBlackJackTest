@@ -23,7 +23,7 @@ class Decision {
     // Determine what action the user should take
     // hitAndStandOnly indicates if first or second hand of a split, can only hit and stand if first hand
     public Action determineUserAction(ArrayList<Integer> userHand, ArrayList<Integer> dealerHand, boolean hitAndStandOnly) {
-        // if userhand is size 3 or greater and has at least one ace in it
+        // if userHand is size 3 or greater and has at least one ace in it
         // if non weak aces eval to 10 or under use 2 card version
         // if 4 cards use 4 card version
         // else eval as sum of all, or 4 card chart 
@@ -32,9 +32,9 @@ class Decision {
         int dHandSize = dealerHand.size();
         int uLowSum = lowSumOfArrayList(userHand);
         int dHighSum = sumOfArrayList(dealerHand);
-        boolean dAce[2]; // only set to non zero if there is an ace in dealer hand 
-        boolean uAce[5];
-        int val, x, y;
+        boolean dAce[] = new boolean[2]; // only set to non zero if there is an ace in dealer hand 
+        boolean uAce[] = new boolean[5];
+        int val, x, y, acePosition = -1; // val is used to save function calls, x, y are positions, acePosition is one ace in the hand
         // Mark the aces 
         for (int i = 0; i < 5; i++) {
             val = dealerHand.get(i);
@@ -47,21 +47,25 @@ class Decision {
         for (int i = 0; i < 2; i++) {
             val = userHand.get(i);
             if (val==11) {
+                acePosition = i;
                 uAce[i] = true;
             } else {
                 uAce[i] = false;
             }
         }
 
-
         // quad 1 of chart
-        if ((uHandSize == 2) && (dHandSize==1)) {
+        if ((uHandSize == 2) && (dHandSize==1) && (hitAndStandOnly==false)) {
             // x value is dealer's card val-2 
             x = dealerHand.get(0) - 2;
             // y value is determined by whether ace is present in hand
                 // whether pair
                 // else combined total
 
+            // Handle ace in userHand
+            if (doesArrayHaveTrue(uAce) == true) {
+                y = userHand.get(cStyleNot(acePosition)) + 13;
+            }
         }
 
 
@@ -77,6 +81,14 @@ class Decision {
         return false;
     }
 
+    // function to do c style ! operator
+    private int cStyleNot(int i) {
+        if (i == 0) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 
     // Evals at highest possible value
     private int sumOfArrayList(ArrayList<Integer> in) {
