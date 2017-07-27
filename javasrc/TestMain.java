@@ -4,7 +4,7 @@ class TestMain {
 	public static void main(String[] args) {
 		ArrayList<Integer> utest = new ArrayList<Integer>();
 		ArrayList<Integer> dtest = new ArrayList<Integer>();
-		Decision decision = new Decision();
+		Decision decision = new Decision("input");
 		dtest.add(10);
 		dtest.add(11);
 		utest.add(10);
