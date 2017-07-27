@@ -14,7 +14,7 @@ public class BlackjackMain {
         Deck deck = new Deck();
         User user = new User(0);
         StateMachine sm = new StateMachine();
-        Decision decision = new Decision();
+        Decision decision = new Decision("input");
         Action action;
         int curFirstHand = 0;
         int iterations = 0;
