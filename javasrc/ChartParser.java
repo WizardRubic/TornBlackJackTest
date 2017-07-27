@@ -2,14 +2,14 @@ import java.io.File;
 import java.util.*;
 
 class ChartParser {
+	private Action[][] array; // magic num but obv enough
 
-	private Action array[37][93]; // magic num but obv enough
-
-    public ChartParser() {
-
+    public ChartParser(String in) {
+    	load(in);
+    	array = new Action[37][93];
     }
 
-    public load(String in) {
+    public void load(String in) {
     	try {
     		File file = new File(in);
     		Scanner scanner = new Scanner(in);
@@ -23,7 +23,7 @@ class ChartParser {
     						array[i][j] = Action.STAND;
     						break;
     					case 2:
-    						array[i][j] = Action.DOUBLE;
+    						array[i][j] = Action.DOUBLEDOWN;
     						break;
     					case 3:
     						array[i][j] = Action.SPLIT;
@@ -37,7 +37,7 @@ class ChartParser {
     				}
     			}
     		}
-    	} catch (Exceptopn ex) {
+    	} catch (Exception ex) {
     		ex.printStackTrace();
     	}
     }
