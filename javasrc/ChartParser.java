@@ -5,16 +5,16 @@ class ChartParser {
 	private Action[][] array; // magic num but obv enough
 
     public ChartParser(String in) {
-    	load(in);
     	array = new Action[37][93];
+    	load(in);
     }
 
     public void load(String in) {
     	try {
     		File file = new File(in);
-    		Scanner scanner = new Scanner(in);
-    		for(int i = 0; i<93; i++) {
-    			for (int j = 0; j<37; j++) {
+    		Scanner scanner = new Scanner(file);
+    		for(int j = 0; j<93; j++) {
+    			for (int i = 0; i<37; i++) {
     				switch (scanner.nextInt()) {
     					case 0:
     						array[i][j] = Action.HIT;
@@ -37,7 +37,34 @@ class ChartParser {
     				}
     			}
     		}
+
+
+			// switch (scanner.nextInt()) {
+			// 	case 0:
+			// 		array[0][0] = Action.HIT;
+			// 		break;
+			// 	case 1:
+			// 		array[0][0] = Action.STAND;
+			// 		break;
+			// 	case 2:
+			// 		array[0][0] = Action.DOUBLEDOWN;
+			// 		break;
+			// 	case 3:
+			// 		array[0][0] = Action.SPLIT;
+			// 		break;
+			// 	case 4:
+			// 		array[0][0] = Action.SURRENDER;
+			// 		break;
+			// 	default:
+			// 		System.out.printf("Error in ChartParser load!\n");
+			// 		break;
+			// }
+
+
+
+    		scanner.close();
     	} catch (Exception ex) {
+    		System.out.printf("Error in ChartParser:\n");
     		ex.printStackTrace();
     	}
     }
