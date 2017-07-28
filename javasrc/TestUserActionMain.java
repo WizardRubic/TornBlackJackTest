@@ -8,7 +8,10 @@ class TestUserActionMain {
     	uHand.add(2);
     	dHand.add(5);
         System.out.printf("Entered TestUserActionMain\n");
-        Decision decision = new Decision("input");
-        System.out.printf("action: %s", decision.determineUserAction(uHand, dHand, false));
+        // Test Chart parser
+        ChartParser testParser = new ChartParser("input");
+
+        // Decision decision = new Decision("input");
+        // System.out.printf("action: %s", decision.determineUserAction(uHand, dHand, false));
     }
 }
