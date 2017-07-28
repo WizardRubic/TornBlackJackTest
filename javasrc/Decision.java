@@ -32,11 +32,11 @@ class Decision {
         int dHandSize = dealerHand.size();
         int uLowSum = lowSumOfArrayList(userHand);
         int dHighSum = sumOfArrayList(dealerHand);
-        boolean dAce[] = new boolean[2]; // only set to non zero if there is an ace in dealer hand 
-        boolean uAce[] = new boolean[5];
+        boolean dAce[] = new boolean[dealerHand.size()]; // only set to non zero if there is an ace in dealer hand 
+        boolean uAce[] = new boolean[userHand.size()];
         int val, x, y, acePosition = -1; // val is used to save function calls, x, y are positions, acePosition is one ace in the hand
         // Mark the aces 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < dealerHand.size(); i++) {
             val = dealerHand.get(i);
             if (val==11) {
                 dAce[i] = true;
@@ -44,7 +44,7 @@ class Decision {
                 dAce[i] = false;
             }
         }
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < userHand.size(); i++) {
             val = userHand.get(i);
             if (val==11) {
                 acePosition = i;
@@ -66,6 +66,10 @@ class Decision {
             if (doesArrayHaveTrue(uAce) == true) {
                 y = userHand.get(cStyleNot(acePosition)) + 13;
             }
+
+            
+
+            // System.out.printf("x:%d y:%d\n",x,y);
         }
 
 
