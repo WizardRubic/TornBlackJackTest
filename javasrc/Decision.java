@@ -61,15 +61,16 @@ class Decision {
             // y value is determined by whether ace is present in hand
                 // whether pair
                 // else combined total
-
-            // Handle ace in userHand
-            if (doesArrayHaveTrue(uAce) == true) {
+            
+            if (userHand.get(0)==userHand.get(1)) { // Handle pair
+                y = userHand.get(0) + 22;
+            } else if (doesArrayHaveTrue(uAce) == true) { // Handle ace in userHand
                 y = userHand.get(cStyleNot(acePosition)) + 13;
+            } else { // combine total
+                y = userHand.get(0) + userHand.get(1) - 5; 
             }
 
-            
-
-            // System.out.printf("x:%d y:%d\n",x,y);
+            System.out.printf("x:%d y:%d\n",x,y);
         }
 
 
