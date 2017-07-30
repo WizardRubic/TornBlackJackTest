@@ -31,20 +31,11 @@ class Decision {
         int uHandSize = userHand.size();
         int dHandSize = dealerHand.size();
         int uLowSum = lowSumOfArrayList(userHand);
-        int dHighSum = sumOfArrayList(dealerHand);
-        boolean dAce[] = new boolean[dealerHand.size()]; // only set to non zero if there is an ace in dealer hand 
+        // int dHighSum = sumOfArrayList(dealerHand);
+        // boolean dAce[] = new boolean[dealerHand.size()]; // only set to non zero if there is an ace in dealer hand 
         boolean uAce[] = new boolean[userHand.size()];
-        int val, x, y, dAcePosition = -1, uAcePosition = -1; // val is used to save function calls, x, y are positions, acePosition is one ace in the hand
+        int val, x, y, uAcePosition = -1; // val is used to save function calls, x, y are positions, acePosition is one ace in the hand
         // Mark the aces 
-        for (int i = 0; i < dealerHand.size(); i++) {
-            val = dealerHand.get(i);
-            if (val==11) {
-                dAcePosition = i;
-                dAce[i] = true;
-            } else {
-                dAce[i] = false;
-            }
-        }
         for (int i = 0; i < userHand.size(); i++) {
             val = userHand.get(i);
             if (val==11) {
@@ -58,7 +49,7 @@ class Decision {
         // quad 1 of chart
         if ((uHandSize == 2) && (dHandSize==1) && (hitAndStandOnly==false)) {
             // x value is dealer's card val-2 
-            x = dealerHand.get(0) - 2;
+            x = detOddQuadX(dealerHand);
             // y value is determined on pattern
             if (userHand.get(0)==userHand.get(1)) { // Handle pair
                 y = userHand.get(0) + 22;
@@ -73,15 +64,16 @@ class Decision {
         // quad 2 of chart
         if ((uHandSize == 2) && (dHandSize==2) && (hitAndStandOnly==false)) {
             // x val
-            if (dealerHand.get(0)==dealerHand.get(1)) { // Handle pair 
-                x = 36;
-            } else if(dHighSum == 21) {
-                x = 27;
-            } else if (doesArrayHaveTrue(dAce)){
-                x = dealerHand.get(cStyleNot(dAcePosition)) + 26;
-            } else {
-                x = dealerHand.get(0) + dealerHand.get(1) + 6;
-            }
+            // if (dealerHand.get(0)==dealerHand.get(1)) { // Handle pair 
+            //     x = 36;
+            // } else if(dHighSum == 21) {
+            //     x = 27;
+            // } else if (doesArrayHaveTrue(dAce)){
+            //     x = dealerHand.get(cStyleNot(dAcePosition)) + 26;
+            // } else {
+            //     x = dealerHand.get(0) + dealerHand.get(1) + 6;
+            // }
+            x = detEvenQuadX(dealerHand);
             // y val
             if (userHand.get(0)==userHand.get(1)) { // Handle pair
                 y = userHand.get(0) + 22;
@@ -96,10 +88,36 @@ class Decision {
         return Action.HIT;
     }
 
-    private detOddQuadX(ArrayList<Integer> dealerHand) {
-
+    private int detOddQuadX(ArrayList<Integer> dealerHand) {
+        int x;
+        x = dealerHand.get(0) - 2;
+        return x;
     }
 
+    private int detEvenQuadX(ArrayList<Integer> dealerHand) {
+        int x, val, dAcePosition = -1;
+        int dHighSum = sumOfArrayList(dealerHand);
+        boolean dAce[] = new boolean[dealerHand.size()];
+        for (int i = 0; i < dealerHand.size(); i++) {
+            val = dealerHand.get(i);
+            if (val==11) {
+                dAcePosition = i;
+                dAce[i] = true;
+            } else {
+                dAce[i] = false;
+            }
+        }
+        if (dealerHand.get(0)==dealerHand.get(1)) { // Handle pair 
+            x = 36;
+        } else if(dHighSum == 21) {
+            x = 27;
+        } else if (doesArrayHaveTrue(dAce)){
+            x = dealerHand.get(cStyleNot(dAcePosition)) + 26;
+        } else {
+            x = dealerHand.get(0) + dealerHand.get(1) + 6;
+        }
+        return x;
+    }
 
 
     // returns if a bool array has a true element
