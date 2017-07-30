@@ -150,7 +150,7 @@ class Decision {
                 dAce[i] = false;
             }
         }
-        if (dealerHand.get(0)==dealerHand.get(1)) { // Handle pair 
+        if ((dealerHand.get(1) == 11) && (dealerHand.get(0)==dealerHand.get(1))) { // Handle pair 
             x = 36;
         } else if(dHighSum == 21) {
             x = 27;
