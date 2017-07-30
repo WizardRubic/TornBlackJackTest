@@ -9,7 +9,6 @@ public class BlackjackMain {
     private static final double BASEBET = 20;
 
     public static void main(String[] args) {
-        System.out.printf("Entered main\n");
         // Setup:
         Deck deck = new Deck();
         User user = new User(0);
@@ -24,14 +23,7 @@ public class BlackjackMain {
         ArrayList<ArrayList<Integer>> hands = new ArrayList<ArrayList<Integer>>(4);
         ArrayList<Integer> dealerHand = new ArrayList<Integer>();
         prepareHands(hands);
-        // hands.get(0).add(2);
-        dealerHand.add(11);
-        dealerHand.add(11);
-        dealerHand.add(10);
-
-        System.out.printf("|%s|",decision.determineDealerAction(dealerHand).toString());
-        // boolean done=false;
-        boolean done=true;
+        boolean done=false;
         while(done == false) {
             switch (sm.getState()) {
                 case DEDUCT_BASEBET_1: 
@@ -46,16 +38,12 @@ public class BlackjackMain {
                     // Shuffle the deck
                     deck.shuffle();
                     // Clear out the hands
-                    // System.out.printf("|%d|",hands.get(0).size());
                     clearHands(hands);
-                    // System.out.printf("|%d|",hands.get(0).size());
-                    // System.out.printf("In state 1");
 
                     // Change states
                     sm.setState(State.DEAL_INITIAL_CARDS_2);
                     break;
                 case DEAL_INITIAL_CARDS_2:
-                    System.out.printf("In state 2\n");
                     // Give user 2 cards
                     hands.get(0).add(deck.draw());
                     hands.get(0).add(deck.draw());
@@ -66,7 +54,6 @@ public class BlackjackMain {
                     // Advance state
                     switch(action) {
                         case HIT:
-                            System.out.printf("Hit");
                             sm.setState(State.DEAL_CARD_5);
                             break;
                         case STAND:
@@ -111,6 +98,7 @@ public class BlackjackMain {
                     // Check if bust
                     if(decision.lowSumOfArrayList(hands.get(0)) > 21) {
                         sm.setState(State.DET_DEALER_ACTION_6);
+                        break;
                     }
                     // Query for next action
                     action = decision.determineUserAction(hands.get(0), dealerHand, true);
@@ -199,6 +187,7 @@ public class BlackjackMain {
                     // Check if bust
                     if(decision.lowSumOfArrayList(hands.get(0)) > 21) {
                         sm.setState(State.DET_DEALER_ACTION_11);
+                        break;
                     }
                     // Query table
                     action = decision.determineUserAction(hands.get(0),dealerHand,true);
@@ -383,6 +372,7 @@ public class BlackjackMain {
                     // Check if bust
                     if(decision.lowSumOfArrayList(hands.get(curFirstHand+1)) > 21) {
                         sm.setState(State.DET_DEALER_ACTION_27);
+                        break;
                     }
                     // Query chart
                     action = decision.determineUserAction(hands.get(curFirstHand+1),dealerHand,true);
@@ -464,6 +454,7 @@ public class BlackjackMain {
                     // Check if bust
                     if(decision.lowSumOfArrayList(hands.get(curFirstHand)) > 21) {
                         sm.setState(State.DET_DEALER_ACTION_27);
+                        break;
                     }
                     // Query for next action
                     action = decision.determineUserAction(hands.get(0), dealerHand, true);
@@ -621,6 +612,10 @@ public class BlackjackMain {
         hands.add(userHand2);
         hands.add(userHand3);
         hands.add(userHand4);
+    }
+
+    private static void debug(String arg1, Object... args) {
+        System.out.printf(arg1, args);
     }
 
 }
