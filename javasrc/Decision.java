@@ -109,7 +109,27 @@ class Decision {
         // quad 5 of chart
         ArrayList<Integer> nonAce = new ArrayList<Integer>(); 
         int lowSumNonAce;
-        if (((uHandSize == 3) || (uHandSize == 4)) && (dHandSize==1) && (hitAndStandOnly==true)) {
+        if ((uHandSize == 3) && (dHandSize==1) && (hitAndStandOnly==true)) {
+            // x val
+            x = detOddQuadX(dealerHand);
+            // y val
+            for (int i : userHand) {
+                if (i!=11) {
+                    nonAce.add(i);
+                }
+            }
+            lowSumNonAce = lowSumOfArrayList(nonAce);
+            if ((doesArrayHaveTrue(uAce) == true) && (lowSumNonAce<10)){ // Handle ace in userHand
+                y = lowSumNonAce + 48;
+            } else { // combine total
+                y = sumOfArrayList(userHand) + 54; 
+            }
+            System.out.printf("x:%d y:%d\n",x,y);
+            return cp.getAction(x,y);
+        }
+
+        // quad 6 of chart
+        if ((uHandSize == 3) && (dHandSize==2) && (hitAndStandOnly==true)) {
             // x val
             x = detEvenQuadX(dealerHand);
             // y val
@@ -120,7 +140,7 @@ class Decision {
             }
             lowSumNonAce = lowSumOfArrayList(nonAce);
             if ((doesArrayHaveTrue(uAce) == true) && (lowSumNonAce<10)){ // Handle ace in userHand
-                y = lowSumNonAce + 13;
+                y = lowSumNonAce + 48;
             } else { // combine total
                 y = sumOfArrayList(userHand) + 54; 
             }
@@ -128,6 +148,26 @@ class Decision {
             return cp.getAction(x,y);
         }
 
+        // quad 7 of chart
+        if ((uHandSize == 4) && (dHandSize==1) && (hitAndStandOnly==true)) {
+            // x val
+            x = detOddQuadX(dealerHand);
+            // y val
+            y = lowSumOfArrayList(userHand) + 71;
+            System.out.printf("x:%d y:%d\n",x,y);
+            return cp.getAction(x,y);
+        }
+
+        // quad 8 of chart
+        if ((uHandSize == 4) && (dHandSize==2) && (hitAndStandOnly==true)) {
+            // x val
+            x = detEvenQuadX(dealerHand);
+            // y val
+            y = lowSumOfArrayList(userHand) + 71;
+            System.out.printf("x:%d y:%d\n",x,y);
+            return cp.getAction(x,y);
+        }
+        System.out.printf("Error in Decision.java determineUserAction");
         return Action.HIT;
     }
 
