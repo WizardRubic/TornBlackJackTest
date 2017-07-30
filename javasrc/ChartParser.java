@@ -9,6 +9,10 @@ class ChartParser {
     	load(in);
     }
 
+    public Action getAction(int x, int y) {
+    	return array[x][y];
+    }
+
     public void load(String in) {
     	try {
     		File file = new File(in);
