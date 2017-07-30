@@ -59,20 +59,12 @@ class Decision {
                 y = userHand.get(0) + userHand.get(1) - 5; 
             }
             System.out.printf("x:%d y:%d\n",x,y);
+            return cp.getAction(x,y);
         }
 
         // quad 2 of chart
         if ((uHandSize == 2) && (dHandSize==2) && (hitAndStandOnly==false)) {
             // x val
-            // if (dealerHand.get(0)==dealerHand.get(1)) { // Handle pair 
-            //     x = 36;
-            // } else if(dHighSum == 21) {
-            //     x = 27;
-            // } else if (doesArrayHaveTrue(dAce)){
-            //     x = dealerHand.get(cStyleNot(dAcePosition)) + 26;
-            // } else {
-            //     x = dealerHand.get(0) + dealerHand.get(1) + 6;
-            // }
             x = detEvenQuadX(dealerHand);
             // y val
             if (userHand.get(0)==userHand.get(1)) { // Handle pair
@@ -82,8 +74,59 @@ class Decision {
             } else { // combine total
                 y = userHand.get(0) + userHand.get(1) - 5; 
             }
+            System.out.printf("x:%d y:%d\n",x,y);
+            return cp.getAction(x,y);
         }
 
+        // quad 3 of chart
+        if ((uHandSize == 2) && (dHandSize==1) && (hitAndStandOnly==true)) {
+            // x val
+            x = detOddQuadX(dealerHand);
+            // y val
+            if (doesArrayHaveTrue(uAce) == true) { // Handle ace in userHand
+                y = userHand.get(cStyleNot(uAcePosition)) + 48;
+            } else { // combine total
+                y = userHand.get(0) + userHand.get(1) + 30; 
+            }
+            System.out.printf("x:%d y:%d\n",x,y);
+            return cp.getAction(x,y);
+        }
+
+        // quad 4 of chart
+        if ((uHandSize == 2) && (dHandSize==2) && (hitAndStandOnly==true)) {
+            // x val
+            x = detEvenQuadX(dealerHand);
+            // y val
+            if (doesArrayHaveTrue(uAce) == true) { // Handle ace in userHand
+                y = userHand.get(cStyleNot(uAcePosition)) + 48;
+            } else { // combine total
+                y = userHand.get(0) + userHand.get(1) + 30; 
+            }
+            System.out.printf("x:%d y:%d\n",x,y);
+            return cp.getAction(x,y);
+        }
+        
+        // quad 5 of chart
+        ArrayList<Integer> nonAce = new ArrayList<Integer>(); 
+        int lowSumNonAce;
+        if (((uHandSize == 3) || (uHandSize == 4)) && (dHandSize==1) && (hitAndStandOnly==true)) {
+            // x val
+            x = detEvenQuadX(dealerHand);
+            // y val
+            for (int i : userHand) {
+                if (i!=11) {
+                    nonAce.add(i);
+                }
+            }
+            lowSumNonAce = lowSumOfArrayList(nonAce);
+            if ((doesArrayHaveTrue(uAce) == true) && (lowSumNonAce<10)){ // Handle ace in userHand
+                y = lowSumNonAce + 13;
+            } else { // combine total
+                y = sumOfArrayList(userHand) + 54; 
+            }
+            System.out.printf("x:%d y:%d\n",x,y);
+            return cp.getAction(x,y);
+        }
 
         return Action.HIT;
     }
