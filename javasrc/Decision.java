@@ -269,6 +269,8 @@ class Decision {
             uHandStr = 25;
         } else if ((uSum <= 21) && (userHand.size()==5)) {
             uHandStr = 24;
+        } else if (uSum > 21) {
+            uHandStr = -2;
         } else {
             uHandStr = uSum;
         }
@@ -276,6 +278,8 @@ class Decision {
             dHandStr = 25;
         } else if ((dSum <= 21) && (dealerHand.size()==5)) {
             dHandStr = 24;
+        } else if (dSum > 21) {
+            dHandStr = -1;
         } else {
             dHandStr = dSum;
         }
