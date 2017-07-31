@@ -123,5 +123,94 @@ class TestUserActionMain {
         System.out.printf("action: %s | expected: 16,35\n", decision.determineUserAction(uHand, dHand, true));
 		
 		// --------- Test Quad 5 ---------
+		// Clear hands
+        uHand.clear();
+        dHand.clear();
+        // Add new cards
+    	uHand.add(3);
+    	uHand.add(2);
+    	uHand.add(2);
+    	dHand.add(5);
+        System.out.printf("action: %s | expected: 3,61\n", decision.determineUserAction(uHand, dHand, true));
+
+        // Clear hands
+        uHand.clear();
+        dHand.clear();
+        // Add new cards
+    	uHand.add(11);
+    	uHand.add(2);
+    	uHand.add(2);
+    	dHand.add(5);
+        System.out.printf("action: %s | expected: 3,52\n", decision.determineUserAction(uHand, dHand, true));
+
+        // Clear hands
+        uHand.clear();
+        dHand.clear();
+        // Add new cards
+    	uHand.add(11);
+    	uHand.add(2);
+    	uHand.add(10);
+    	dHand.add(5);
+        System.out.printf("action: %s | expected: 3,67\n", decision.determineUserAction(uHand, dHand, true));
+
+        // --------- Test Quad 6 ---------
+		// Clear hands
+        uHand.clear();
+        dHand.clear();
+        // Add new cards
+    	uHand.add(3);
+    	uHand.add(2);
+    	uHand.add(2);
+    	dHand.add(11);
+    	dHand.add(5);
+        System.out.printf("action: %s | expected: 31,61\n", decision.determineUserAction(uHand, dHand, true));
+
+        // Clear hands
+        uHand.clear();
+        dHand.clear();
+        // Add new cards
+    	uHand.add(11);
+    	uHand.add(2);
+    	uHand.add(2);
+    	dHand.add(11);
+    	dHand.add(5);
+        System.out.printf("action: %s | expected: 31,52\n", decision.determineUserAction(uHand, dHand, true));
+
+        // Clear hands
+        uHand.clear();
+        dHand.clear();
+        // Add new cards
+    	uHand.add(11);
+    	uHand.add(2);
+    	uHand.add(10);
+    	dHand.add(11);
+    	dHand.add(5);
+        System.out.printf("action: %s | expected: 31,67\n", decision.determineUserAction(uHand, dHand, true));
+
+        // --------- Test Quad 7 ---------
+		// Clear hands
+        uHand.clear();
+        dHand.clear();
+        // Add new cards
+    	uHand.add(3);
+    	uHand.add(2);
+    	uHand.add(2);
+    	uHand.add(2);
+    	dHand.add(11);
+        System.out.printf("action: %s | expected: 9,80\n", decision.determineUserAction(uHand, dHand, true));
+
+
+        // --------- Test Quad 8 ---------
+		// Clear hands
+        uHand.clear();
+        dHand.clear();
+        // Add new cards
+    	uHand.add(3);
+    	uHand.add(2);
+    	uHand.add(2);
+    	uHand.add(11);
+    	dHand.add(11);
+        System.out.printf("action: %s | expected: 9,79\n", decision.determineUserAction(uHand, dHand, true));
+		
     }
 }
