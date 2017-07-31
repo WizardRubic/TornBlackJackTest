@@ -41,31 +41,6 @@ class ChartParser {
     				}
     			}
     		}
-
-
-			// switch (scanner.nextInt()) {
-			// 	case 0:
-			// 		array[0][0] = Action.HIT;
-			// 		break;
-			// 	case 1:
-			// 		array[0][0] = Action.STAND;
-			// 		break;
-			// 	case 2:
-			// 		array[0][0] = Action.DOUBLEDOWN;
-			// 		break;
-			// 	case 3:
-			// 		array[0][0] = Action.SPLIT;
-			// 		break;
-			// 	case 4:
-			// 		array[0][0] = Action.SURRENDER;
-			// 		break;
-			// 	default:
-			// 		System.out.printf("Error in ChartParser load!\n");
-			// 		break;
-			// }
-
-
-
     		scanner.close();
     	} catch (Exception ex) {
     		System.out.printf("Error in ChartParser:\n");

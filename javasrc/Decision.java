@@ -58,7 +58,7 @@ class Decision {
             } else { // combine total
                 y = userHand.get(0) + userHand.get(1) - 5; 
             }
-            System.out.printf("x:%d y:%d\n",x,y);
+            // System.out.printf("x:%d y:%d\n",x,y);
             return cp.getAction(x,y);
         }
 
@@ -74,7 +74,7 @@ class Decision {
             } else { // combine total
                 y = userHand.get(0) + userHand.get(1) - 5; 
             }
-            System.out.printf("x:%d y:%d\n",x,y);
+            // System.out.printf("x:%d y:%d\n",x,y);
             return cp.getAction(x,y);
         }
 
@@ -88,7 +88,7 @@ class Decision {
             } else { // combine total
                 y = userHand.get(0) + userHand.get(1) + 30; 
             }
-            System.out.printf("x:%d y:%d\n",x,y);
+            // System.out.printf("x:%d y:%d\n",x,y);
             return cp.getAction(x,y);
         }
 
@@ -102,7 +102,7 @@ class Decision {
             } else { // combine total
                 y = userHand.get(0) + userHand.get(1) + 30; 
             }
-            System.out.printf("x:%d y:%d\n",x,y);
+            // System.out.printf("x:%d y:%d\n",x,y);
             return cp.getAction(x,y);
         }
         
@@ -124,7 +124,7 @@ class Decision {
             } else { // combine total
                 y = sumOfArrayList(userHand) + 54; 
             }
-            System.out.printf("x:%d y:%d\n",x,y);
+            // System.out.printf("x:%d y:%d\n",x,y);
             return cp.getAction(x,y);
         }
 
@@ -144,7 +144,7 @@ class Decision {
             } else { // combine total
                 y = sumOfArrayList(userHand) + 54; 
             }
-            System.out.printf("x:%d y:%d\n",x,y);
+            // System.out.printf("x:%d y:%d\n",x,y);
             return cp.getAction(x,y);
         }
 
@@ -154,7 +154,7 @@ class Decision {
             x = detOddQuadX(dealerHand);
             // y val
             y = lowSumOfArrayList(userHand) + 71;
-            System.out.printf("x:%d y:%d\n",x,y);
+            // System.out.printf("x:%d y:%d\n",x,y);
             return cp.getAction(x,y);
         }
 
@@ -164,10 +164,18 @@ class Decision {
             x = detEvenQuadX(dealerHand);
             // y val
             y = lowSumOfArrayList(userHand) + 71;
-            System.out.printf("x:%d y:%d\n",x,y);
+            // System.out.printf("x:%d y:%d\n",x,y);
             return cp.getAction(x,y);
         }
-        System.out.printf("Error in Decision.java determineUserAction");
+        System.out.printf("Error in Decision.java determineUserAction, UserHand: ");
+        for(int i : userHand) {
+            System.out.printf("%d ",i);
+        }
+        System.out.printf("DealerHand: ");
+        for(int i : dealerHand) {
+            System.out.printf("%d ",i);
+        }
+        System.out.printf("Boolean: %b\n", hitAndStandOnly);
         return Action.HIT;
     }
 
