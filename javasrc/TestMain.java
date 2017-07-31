@@ -57,5 +57,23 @@ class TestMain {
 		utest.add(10);
 		utest.add(11);
 		System.out.printf("expected 2.5| result - %s\n",decision.determineWinner(utest,dtest).toString());
+		// =====
+		dtest.clear();
+		utest.clear();
+		utest.add(10);
+		utest.add(10);
+		dtest.add(10);
+		dtest.add(5);
+		dtest.add(7);
+		System.out.printf("expected 2| result - %s\n",decision.determineWinner(utest,dtest).toString());
+		// =====
+		dtest.clear();
+		utest.clear();
+		utest.add(8);
+		utest.add(9);
+		dtest.add(10);
+		dtest.add(3);
+		dtest.add(4);
+		System.out.printf("expected 1| result - %s\n",decision.determineWinner(utest,dtest).toString());
 	}
 }
