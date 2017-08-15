@@ -74,6 +74,11 @@ class Decision {
             } else { // combine total
                 y = userHand.get(0) + userHand.get(1) - 5; 
             }
+            // debug
+            // if((x==17) && (y==5)){
+            //     BlackjackMain.debugVar = true;
+            // }
+
             // System.out.printf("x:%d y:%d\n",x,y);
             return cp.getAction(x,y);
         }
