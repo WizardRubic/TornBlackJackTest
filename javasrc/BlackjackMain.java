@@ -3,10 +3,12 @@
 //http://codr.io/lykh7q5 (deck.java)
 
 import java.util.*;
+import java.math.BigDecimal;
 
 public class BlackjackMain {
 
-    // private static final double user.getBaseBet() = 20;
+    public static BigDecimal prevcash;
+    public static ArrayList<Integer> debugHand;
 
     public static void main(String[] args) {
 
@@ -18,7 +20,9 @@ public class BlackjackMain {
 
         // Setup:
         Deck deck = new Deck();
-        User user = new User(0);
+        prevcash = new BigDecimal(0.0);
+        // User user = new User(0);
+        PercentUser user = new PercentUser(2000);
         StateMachine sm = new StateMachine();
         Decision decision = new Decision(args[1]);
         Action action;
@@ -29,11 +33,14 @@ public class BlackjackMain {
 
         ArrayList<ArrayList<Integer>> hands = new ArrayList<ArrayList<Integer>>(4);
         ArrayList<Integer> dealerHand = new ArrayList<Integer>();
+        debugHand = new ArrayList<Integer>();
         prepareHands(hands);
         boolean done=false;
+        // loop thruogh states
         while(done == false) {
             switch (sm.getState()) {
                 case DEDUCT_BASEBET_1: 
+                    prevcash = user.getCash();
                     // Check if we're done
                     iterations++;
                     if (iterations>tokens) {
@@ -44,12 +51,14 @@ public class BlackjackMain {
                     debug("--------------------- Hand: %d ---------------------\n", iterations);
                     // Deduct the bet size
                     user.updateBaseBet();
-                    user.changeCash(-1*user.getBaseBet());
+                    debug("user.getBaseBet():%f\n", user.getBaseBet());
+                    user.changeCash(user.getBaseBet().multiply(new BigDecimal(-1.0)));
                     // Shuffle the deck
                     deck.shuffle();
                     // Clear out the hands
                     clearHands(hands);
                     dealerHand.clear();
+                    debugHand.clear();
 
                     verboseDebug(sm, hands, dealerHand, user);
                     // Change states
@@ -91,7 +100,7 @@ public class BlackjackMain {
                     break;
                 case REFUND_3:
                     // refund 0.5
-                    user.changeCash(user.getBaseBet()*0.5);
+                    user.changeCash(user.getBaseBet().multiply(new BigDecimal(0.5)));
 
                     verboseDebug(sm, hands, dealerHand, user);
 
@@ -102,7 +111,7 @@ public class BlackjackMain {
                     debug("SPLIT!\n");
                     curFirstHand = 0;
                     // Charge user for split
-                    user.changeCash(-1 * user.getBaseBet());
+                    user.changeCash(user.getBaseBet().multiply(new BigDecimal(-1)));
                     // Create 2 hands
                     hands.get(1).add(hands.get(0).remove(0));
                     hands.get(0).add(deck.draw());
@@ -274,7 +283,7 @@ public class BlackjackMain {
                     break;
                 case PLUS_13:
                     // increase user total
-                    user.changeCash(0.0 * dd * user.getBaseBet());
+                    user.changeCash(user.getBaseBet().multiply(new BigDecimal(0.0)).multiply(new BigDecimal(dd)));
                     dd = 1;
                     verboseDebug(sm, hands, dealerHand, user);
                     // Change states
@@ -283,7 +292,7 @@ public class BlackjackMain {
                     break;
                 case PLUS_14:
                     // increase user total
-                    user.changeCash(1.0 * dd * user.getBaseBet());
+                    user.changeCash(user.getBaseBet().multiply(new BigDecimal(1.0)).multiply(new BigDecimal(dd)));
                     dd = 1;
                     verboseDebug(sm, hands, dealerHand, user);
                     // Change states
@@ -292,7 +301,7 @@ public class BlackjackMain {
                     break;
                 case PLUS_15:
                     // increase user total
-                    user.changeCash(2.0 * dd * user.getBaseBet());
+                    user.changeCash(user.getBaseBet().multiply(new BigDecimal(2.0)).multiply(new BigDecimal(dd)));
                     dd = 1;
                     verboseDebug(sm, hands, dealerHand, user);
                     // Change states
@@ -301,7 +310,7 @@ public class BlackjackMain {
                     break;
                 case PLUS_16:
                     // increase user total
-                    user.changeCash(2.5 * dd * user.getBaseBet());
+                    user.changeCash(user.getBaseBet().multiply(new BigDecimal(2.5)).multiply(new BigDecimal(dd)));
                     dd = 1;
                     verboseDebug(sm, hands, dealerHand, user);
                     // Change states
@@ -331,7 +340,7 @@ public class BlackjackMain {
                     break;
                 case PLUS_18:
                     // increase user total
-                    user.changeCash(0.0 * dd * user.getBaseBet());
+                    user.changeCash(user.getBaseBet().multiply(new BigDecimal(0.0)).multiply(new BigDecimal(dd)));
                     dd = 1;
                     verboseDebug(sm, hands, dealerHand, user);
                     // Change states
@@ -339,7 +348,7 @@ public class BlackjackMain {
                     break;
                 case PLUS_19:
                     // increase user total
-                    user.changeCash(1.0 * dd * user.getBaseBet());
+                    user.changeCash(user.getBaseBet().multiply(new BigDecimal(1.0)).multiply(new BigDecimal(dd)));
                     dd = 1;
                     verboseDebug(sm, hands, dealerHand, user);
                     // Change states
@@ -347,7 +356,7 @@ public class BlackjackMain {
                     break;
                 case PLUS_20:
                     // increase user total
-                    user.changeCash(2.0 * dd * user.getBaseBet());
+                    user.changeCash(user.getBaseBet().multiply(new BigDecimal(2.0)).multiply(new BigDecimal(dd)));
                     dd = 1;
                     verboseDebug(sm, hands, dealerHand, user);
                     // Change states
@@ -355,7 +364,7 @@ public class BlackjackMain {
                     break;
                 case PLUS_21:
                     // increase user total
-                    user.changeCash(2.5 * dd * user.getBaseBet());
+                    user.changeCash(user.getBaseBet().multiply(new BigDecimal(2.5)).multiply(new BigDecimal(dd)));
                     dd = 1;
                     verboseDebug(sm, hands, dealerHand, user);
                     // Change states
@@ -364,7 +373,8 @@ public class BlackjackMain {
                 case HANDLE_SECOND_22:
                     // Clear out dealer hands
                     for(int i = 0; dealerHand.size()>2; i++) {
-                        dealerHand.remove(2);
+                        // dealerHand.remove(2);
+                        debugHand.add(dealerHand.remove(2));
                     }
                     // Query chart
                     action = decision.determineUserAction(hands.get(curFirstHand+1),dealerHand,false);
@@ -393,7 +403,7 @@ public class BlackjackMain {
                     break;
                 case REFUND_23:
                     // Refund
-                    user.changeCash(0.5*user.getBaseBet());
+                    user.changeCash(user.getBaseBet().multiply(new BigDecimal(0.5)));
                     verboseDebug(sm, hands, dealerHand, user);
                     // Change state
                     sm.setState(State.DEDUCT_BASEBET_1);
@@ -404,7 +414,7 @@ public class BlackjackMain {
                     // Increment the first hand counter
                     curFirstHand++;
                     // Charge the user for a split
-                    user.changeCash(-1 * user.getBaseBet());
+                    user.changeCash(user.getBaseBet().multiply(new BigDecimal(-1)));
                     // Split the hand
                     hands.get(curFirstHand+1).add(hands.get(curFirstHand).remove(1));
                     // Add a card to both the new hands
@@ -417,7 +427,7 @@ public class BlackjackMain {
                 case DEAL_CARD_25:
                     debug("Double Down \n");
                     // Double down
-                    user.changeCash(-1*user.getBaseBet());
+                    user.changeCash(user.getBaseBet().multiply(new BigDecimal(-1)));
                     dd = 2;
                     // Draw a card
                     hands.get(curFirstHand+1).add(deck.draw());
@@ -600,7 +610,7 @@ public class BlackjackMain {
                     break;
                 case PLUS_35:
                     // increase user total
-                    user.changeCash(0.0 * dd * user.getBaseBet());
+                    user.changeCash(user.getBaseBet().multiply(new BigDecimal(0.0)).multiply(new BigDecimal(dd)));
                     dd = 1;
                     verboseDebug(sm, hands, dealerHand, user);
                     // Change states
@@ -609,7 +619,7 @@ public class BlackjackMain {
                     break;
                 case PLUS_36:
                     // increase user total
-                    user.changeCash(1.0 * dd * user.getBaseBet());
+                    user.changeCash(user.getBaseBet().multiply(new BigDecimal(1.0)).multiply(new BigDecimal(dd)));
                     dd = 1;
                     verboseDebug(sm, hands, dealerHand, user);
                     // Change states
@@ -618,7 +628,7 @@ public class BlackjackMain {
                     break;
                 case PLUS_37:
                     // increase user total
-                    user.changeCash(2.0 * dd * user.getBaseBet());
+                    user.changeCash(user.getBaseBet().multiply(new BigDecimal(2.0)).multiply(new BigDecimal(dd)));
                     dd = 1;
                     verboseDebug(sm, hands, dealerHand, user);
                     // Change states
@@ -627,7 +637,7 @@ public class BlackjackMain {
                     break;
                 case PLUS_38:
                     // increase user total
-                    user.changeCash(2.5 * dd * user.getBaseBet());
+                    user.changeCash(user.getBaseBet().multiply(new BigDecimal(2.5)).multiply(new BigDecimal(dd)));
                     dd = 1;
                     verboseDebug(sm, hands, dealerHand, user);
                     // Change states
@@ -636,7 +646,7 @@ public class BlackjackMain {
                     break;
                 case PLUS_39:
                     // increase user total
-                    user.changeCash(0.0 * dd * user.getBaseBet());
+                    user.changeCash(user.getBaseBet().multiply(new BigDecimal(0.0)).multiply(new BigDecimal(dd)));
                     dd = 1;
                     verboseDebug(sm, hands, dealerHand, user);
                     // Change states
@@ -644,7 +654,7 @@ public class BlackjackMain {
                     break;
                 case PLUS_40:
                     // increase user total
-                    user.changeCash(1.0 * dd * user.getBaseBet());
+                    user.changeCash(user.getBaseBet().multiply(new BigDecimal(1.0)).multiply(new BigDecimal(dd)));
                     dd = 1;
                     verboseDebug(sm, hands, dealerHand, user);
                     // Change states
@@ -652,7 +662,7 @@ public class BlackjackMain {
                     break;
                 case PLUS_41:
                     // increase user total
-                    user.changeCash(2.0 * dd * user.getBaseBet());
+                    user.changeCash(user.getBaseBet().multiply(new BigDecimal(2.0)).multiply(new BigDecimal(dd)));
                     dd = 1;
                     verboseDebug(sm, hands, dealerHand, user);
                     // Change states
@@ -660,7 +670,7 @@ public class BlackjackMain {
                     break;
                 case PLUS_42:
                     // increase user total
-                    user.changeCash(2.5 * dd * user.getBaseBet());
+                    user.changeCash(user.getBaseBet().multiply(new BigDecimal(2.5)).multiply(new BigDecimal(dd)));
                     dd = 1;
                     verboseDebug(sm, hands, dealerHand, user);
                     // Change states
@@ -669,7 +679,7 @@ public class BlackjackMain {
                 case DEAL_CARD_43:
                     debug("Double Down \n");
                     // Double down
-                    user.changeCash(-1*user.getBaseBet());
+                    user.changeCash(user.getBaseBet().multiply(new BigDecimal(-1.0)));
                     dd = 2;
                     // Draw a card
                     hands.get(0).add(deck.draw());
@@ -705,7 +715,7 @@ public class BlackjackMain {
     }
 
     public static void debug(String arg1, Object... args) {
-        // System.out.printf(arg1, args);
+        System.out.printf(arg1, args);
     }
 
     private static String formatHand(ArrayList<Integer> input) {
@@ -718,14 +728,16 @@ public class BlackjackMain {
     }
 
     private static void debugPrintInfo(ArrayList<ArrayList<Integer>> hands, ArrayList<Integer> dealerHand, User user) {
-        // int i = 0;
-        // // Print all the user hands
-        // for(ArrayList<Integer> hand : hands) {
-        //     debug("userHand %d: %s\n",i, formatHand(hand));
-        //     i++;
-        // }
-        // debug("dealerHand: %s\n", formatHand(dealerHand));
-        // debug("new total: %f\n", user.getCash());
+        int i = 0;
+        // Print all the user hands
+        for(ArrayList<Integer> hand : hands) {
+            debug("userHand %d: %s\n",i, formatHand(hand));
+            i++;
+        }
+        debug("dealerHand: %s\n", formatHand(dealerHand));
+        debug("prevcash: %s\n", prevcash);
+        debug("new total: %s\n", user.getCash());
+        debug("debugHand: %s\n", formatHand(debugHand));  
     }
 
     private static void verboseDebug(StateMachine sm, ArrayList<ArrayList<Integer>> hands, ArrayList<Integer> dealerHand, User user) {
