@@ -1,4 +1,6 @@
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.math.MathContext;
 
 class User {
 	private BigDecimal cashTotal;
@@ -6,17 +8,20 @@ class User {
 	private BigDecimal cashChanged;
 	protected BigDecimal baseBet;
 	private BigDecimal startCash;
+	private MathContext mathContext;
 	public User() {
-		cashTotal = new BigDecimal(0);
+		mathContext = new MathContext(15,RoundingMode.HALF_UP);
+		cashTotal = new BigDecimal("0", mathContext);
 		handsPlayed = 0;
-		cashChanged = new BigDecimal(0);
+		cashChanged = new BigDecimal("0", mathContext);
 	}
 
-	public User(double startCash) {
-		cashTotal = new BigDecimal(startCash);
-		this.startCash = new BigDecimal(startCash);
+	public User(String startCash) {
+		mathContext = new MathContext(15,RoundingMode.HALF_UP);
+		cashTotal = new BigDecimal(startCash, mathContext);
+		this.startCash = new BigDecimal(startCash, mathContext);
 		handsPlayed = 0;
-		cashChanged = new BigDecimal(0.0);
+		cashChanged = new BigDecimal("0.0", mathContext);
 	}
 
 	public BigDecimal getCash() {
@@ -26,8 +31,8 @@ class User {
 		cashTotal = amt;
 	}
 	public void changeCash(BigDecimal delta) {
-		cashChanged = cashChanged.add(delta);
-		cashTotal = cashTotal.add(delta);
+		cashChanged = cashChanged.add(delta, mathContext);
+		cashTotal = cashTotal.add(delta, mathContext);
 	}
 	public void incrementHandsPlayed() {
 		handsPlayed++;
@@ -36,7 +41,7 @@ class User {
 		return handsPlayed;
 	}
 	public BigDecimal getProfitPerHand() {
-		return cashChanged.divide(new BigDecimal(handsPlayed));
+		return cashChanged.divide(new BigDecimal(handsPlayed), mathContext);
 	}
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
@@ -45,12 +50,12 @@ class User {
 		sb.append(getHandsPlayed());
 		sb.append("\n");
 		sb.append("Profit per hand: ");
-		sb.append(getProfitPerHand());
+		sb.append(getProfitPerHand().toString());
 		sb.append("\n");
 		sb.append("startCash: ");
-		sb.append(startCash);
+		sb.append(startCash.toString());
 		sb.append("\nendCash: ");
-		sb.append(cashTotal);
+		sb.append(cashTotal.toString());
 		sb.append("\n");
 		return sb.toString();
 	}
@@ -58,6 +63,7 @@ class User {
 		return baseBet;
 	}
 	public void updateBaseBet() {
+		baseBet = new BigDecimal("20", mathContext);
 		return;
 	}
 }
