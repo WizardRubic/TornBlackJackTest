@@ -13,12 +13,38 @@ public class BlackjackMain {
     public static ArrayList<Integer> debugHand;
 
     public static void main(String[] args) {
-
         // Check input
-        if (args.length != 2) {
-            System.out.printf("Improper Usage: <hands> <input chart>");
+        if (args.length != 3) {
+            System.out.printf("Improper Usage: <hands> <input chart> <number of sessions>");
             System.exit(0);
         }
+        MathContext mathContext = new MathContext(15,RoundingMode.HALF_UP);
+        BigDecimal total = new BigDecimal("0.0", mathContext);
+        User user;
+        int iterations;
+        iterations = Integer.parseInt(args[2]);
+        int numberOfTimesWon = 0;
+        int numberOfTimesLoss = 0;
+        // loop through and run the simulation many times with the given inputs
+        for(int i = 0; i <iterations; i++){
+            user = mainLoop(args);
+            System.out.printf("%s", user);
+            BigDecimal cashChanged = user.getCashChanged();
+            total = total.add(cashChanged, mathContext);
+            if (cashChanged.compareTo(new BigDecimal("0.0"))==1) {
+                numberOfTimesWon++;
+            } else {
+                numberOfTimesLoss++;
+            }
+        }
+        
+        System.out.printf("---------\naverage profit: %s\nnumber of times won: %d\nnumber of times loss or break even: %d\n", total.divide(new BigDecimal(iterations), mathContext), numberOfTimesWon, numberOfTimesLoss);
+
+    }
+
+
+    public static User mainLoop(String[] args) {
+        
 
         // Setup:
         Deck deck = new Deck();
@@ -696,8 +722,8 @@ public class BlackjackMain {
                     break;
             }
         }
-        System.out.printf("%s",user.toString());
-
+        // System.out.printf("%s",user.toString());
+        return user;
     }
 
     private static void clearHands(ArrayList<ArrayList<Integer>> hands) {

@@ -43,6 +43,9 @@ class User {
 	public BigDecimal getProfitPerHand() {
 		return cashChanged.divide(new BigDecimal(handsPlayed), mathContext);
 	}
+	public BigDecimal getCashChanged() {
+		return cashChanged;
+	}
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		sb.append("UserStats:\n");
@@ -63,7 +66,7 @@ class User {
 		return baseBet;
 	}
 	public void updateBaseBet() {
-		baseBet = new BigDecimal("20", mathContext);
+		baseBet = new BigDecimal("100", mathContext);
 		return;
 	}
 }
