@@ -4,11 +4,11 @@ I am testing whether torn.com online game blackjack is beatable using a simulati
 With the current program simulation it looks like it is beatable. 
 
 
-# Why I think the in game casino may be in our favor
+# Potentially beatable ruleset
 
 ![Nash Beats the Casino](https://github.com/WizardRubic/TornBlackJackTest/blob/testmake/res/nashWins.png "Nash Beats the Casino")
 
-For the non-torn player: these are VERY large amounts of torn money xD
+It appears that many of the game's top players are profitable and one has made a claim about the game's flaws below: 
 
 https://www.torn.com/forums.php#!p=threads&f=2&t=15985799&b=0&a=0&start=20&to=17328277
 ![Nash Claim 1](https://github.com/WizardRubic/TornBlackJackTest/blob/testmake/res/nashPost1.png "Nash Claim 1")
