@@ -42,7 +42,7 @@ public class BlackjackMain {
 
     }
 
-
+    // Returns a user with details about performance with given paramaters
     public static User mainLoop(String[] args) {
         
 
@@ -51,8 +51,8 @@ public class BlackjackMain {
         prevcash = new BigDecimal("0.0");
         MathContext mathContext = new MathContext(15,RoundingMode.HALF_UP);
 
-        // User user = new User("2000");
-        PercentUser user = new PercentUser("2000");
+        User user = new User("2000");
+        // PercentUser user = new PercentUser("2000");
         StateMachine sm = new StateMachine();
         Decision decision = new Decision(args[1]);
         Action action;

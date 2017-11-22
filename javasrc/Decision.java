@@ -114,13 +114,21 @@ class Decision {
         // quad 5 of chart
         ArrayList<Integer> nonAce = new ArrayList<Integer>(); 
         int lowSumNonAce;
+        boolean firstAce = true;
         if ((uHandSize == 3) && (dHandSize==1) && (hitAndStandOnly==true)) {
             // x val
             x = detOddQuadX(dealerHand);
             // y val
-            for (int i : userHand) {
-                if (i!=11) {
-                    nonAce.add(i);
+            for (int i : userHand) {  // need to handle case where we have hand A2A
+                if ((i==11) && (firstAce)) {
+                    // don't add if it's the first ace
+                    firstAce = false;
+                } else {
+                    if (i==11) {
+                        nonAce.add(11);
+                    } else {
+                        nonAce.add(i);
+                    }
                 }
             }
             lowSumNonAce = lowSumOfArrayList(nonAce);
@@ -139,15 +147,21 @@ class Decision {
             x = detEvenQuadX(dealerHand);
             // y val
             for (int i : userHand) {
-                if (i!=11) {
-                    nonAce.add(i);
+                if ((i==11) && (firstAce)) {
+                    firstAce = false;
+                } else {
+                    if (i==11) {
+                        nonAce.add(11);
+                    } else {
+                        nonAce.add(i);
+                    }
                 }
             }
             lowSumNonAce = lowSumOfArrayList(nonAce);
             if ((doesArrayHaveTrue(uAce) == true) && (lowSumNonAce<10)){ // Handle ace in userHand
                 y = lowSumNonAce + 48;
             } else { // combine total
-                y = sumOfArrayList(userHand) + 54; 
+                y = sumOfArrayList(userHand) + 54;
             }
             // System.out.printf("x:%d y:%d\n",x,y);
             return cp.getAction(x,y);
