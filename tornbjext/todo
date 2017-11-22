@@ -1,0 +1,16 @@
+todo:
+
+make a blacklist store locally
+implement the below conditions on the badge and notifications:
+    Conditions for a number to appear on the notification:
+        Number is number of targets that have been online in the past 10 minutes
+
+    Conditions for a notification to be sent out:
+        The target's last action was greater than x but now it's 0 minutes
+            this doesn't work without some other condition cuz then it'll happen 30 times a minute while the target is online
+                need to store last status, if last status is > 10 min and new status is 
+
+
+done:
+figure out how to make request every x seconds
+    setInterval(function, period_in_ms)

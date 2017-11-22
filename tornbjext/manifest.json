@@ -1,0 +1,45 @@
+{
+  // Required
+  "manifest_version": 2,
+  "name": "TornBJExtension",
+  "version": "1.0",
+
+  // Recommended
+  "description": "Access chart data to hide buttons appropriately",
+  "icons": {"128": "icon.png"},
+
+  // Pick one (or none)
+  "browser_action": {
+    "default_icon": {
+      "24": "browser_action_icon.png"
+    },
+    "default_title": "TornBJExtension",
+    "default_popup": "popup.html"
+  },
+
+ "content_scripts": [
+    {
+      "matches": ["https://www.torn.com/loader.php?sid=blackjack"],
+      "css": ["uichanges.css"],
+      "js": ["bj.js"],
+      "run_at": "document_start"
+    }
+  ],
+
+
+  // Optional
+  "author": "Kevin J",
+  "background": {
+    // Recommended
+    "scripts": ["eventPage.js"],
+    "persistent": true
+  },
+  "incognito": "spanning",
+  "permissions": [
+    "storage",
+    "https://api.torn.com/*",
+    "activeTab",
+    "tabs",
+    "notifications"
+  ]
+}
