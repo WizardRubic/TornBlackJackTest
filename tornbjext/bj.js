@@ -264,7 +264,8 @@ class Chart {
         console.log(this.dealerHand.length);
         console.log(this.userHand.length);
         console.log(hitAndStandOnly);
-        return 0;
+        // Return error number
+        return 10;
 	}
 	detOddQuadX(dHand) {
         var x;
@@ -374,6 +375,7 @@ class StartContainer {
 		this.insurance = undefined;
 		this.surrender = undefined;
 		this.continue = undefined;
+        this.queryResult = undefined;
 		this.chart = new Chart(); 
 	}
 
@@ -420,7 +422,11 @@ class StartContainer {
         if(document.getElementsByClassName("win-lose-wrap")[0].getAttribute("class").search("bj-show")==-1) {
             this.hideContinue();
         } else {
-            this.showContinue();
+            if(document.getElementsByClassName("wl-msg")[0].children[0].innerText.search("PUSH")==-1) { 
+                this.showContinue();
+            } else {
+                this.showContinuePush();
+            }
         }
 
 
@@ -520,8 +526,37 @@ class StartContainer {
 			}
 			this.chart.addToUserHand(handArray);
 			handArray = [];
+
 			// Query chart
-			var action = this.chart.query(this.hitOrStandOnly());
+            var action;
+            action = this.chart.query(this.hitOrStandOnly());
+            // this.sleepFor10(1);
+            // action = this.queryResult;
+
+
+            /// test SO answer
+            // do{
+            //     // Usage!
+            //     this.sleep(500).then(() => {
+            //         action = this.chart.query(this.hitOrStandOnly());
+            //     });
+                           
+            //     // this.sleep(100);
+            // } while (action == 10 || typeof action == 'undefined') ;
+
+            console.log("escaped sleep eval: " + (typeof action == 'undefined') +  " type " + typeof action);
+            if(typeof action == "undefined" || action == 10) {
+                this.sleepFor10(1);
+                action = this.chart.query(this.hitOrStandOnly());
+            }
+            // do {
+                
+            //     if (action == 10) {
+            //         this.sleepFor10(1);
+            //     }
+            // } while(action==10);
+            
+            console.log("action: " + action);
 			switch(action) {
 				case 0:
 					this.showHit();
@@ -545,6 +580,32 @@ class StartContainer {
 
 		}
 	}
+
+    // Takes in a 1 to sleep. 
+    // 
+    sleepFor10(first) {
+        var context = this;
+        var action;
+        if(first == 1) {
+            console.log("1");
+            setTimeout(function() {
+                context.sleepFor10(0);
+            }, 300);
+        } else {
+            action = this.chart.query(this.hitOrStandOnly());
+            if (action == 10 || typeof action == 'undefined' ) {
+                this.sleepFor10(1);
+            } else {
+                this.queryResult = action;
+            }
+        }
+        console.log("------------------------timer ----");
+    }
+
+    sleep (time) {
+        return new Promise((resolve) => setTimeout(resolve, time));
+    }
+
     hidePlay() {
         this.play.style.display = "none";
     }
@@ -609,6 +670,15 @@ class StartContainer {
 	// 	}
 	// }
 
+
+    showContinuePush() {
+        if(typeof this.continue !== undefined) {
+            this.continue.style.display = "block";
+            this.continue.style.position = "relative";
+            this.continue.style.top = "65px";
+        }
+    }
+
     showContinue() {
         if(typeof this.continue !== undefined) {
             this.continue.style.display = "block";
@@ -666,6 +736,11 @@ class StartContainer {
 
 	}
 	showHit() {
+        // Move the yes button away so we don't get rekt'd if it glitches
+        this.yesButton.style.position = "relative";
+        this.yesButton.style.top = "100px";
+
+
 		var i;
 		for(i=1;i<7;i++) {
 			this.actionButtons[i].style.position = "relative";
@@ -676,6 +751,9 @@ class StartContainer {
 		this.hit.style.zIndex = "20";
 	}
 	showStand() {
+        // Move the yes button away so we don't get rekt'd if it glitches
+        this.yesButton.style.position = "relative";
+        this.yesButton.style.top = "100px";
 		var i;
 		for(i=1;i<7;i++) {
 			this.actionButtons[i].style.position = "relative";
