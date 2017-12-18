@@ -205,11 +205,11 @@ class Chart {
         var firstAce = true;
         if ((uHandSize == 3) && (dHandSize==1) && (hitAndStandOnly==true)) {
             x = this.detOddQuadX(this.dealerHand);
-            
             for (i=0;i<this.userHand.length;i++) {
                 if (this.userHand[i]==11) {
+                    console.log("firstAce: " + firstAce);
                     if(firstAce) {
-                        firstAce == false;
+                        firstAce = false;
                     } else {
                         nonAce.push(11);
                     }
@@ -231,7 +231,7 @@ class Chart {
             for (i=0;i<this.userHand.length;i++) {
                 if (this.userHand[i]==11) {
                     if(firstAce) {
-                        firstAce == false;
+                        firstAce = false;
                     } else {
                         nonAce.push(11);
                     }
