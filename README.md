@@ -5,9 +5,9 @@ With the current program simulation it looks like it is beatable.
 
 ## Video
 Without the chrome extension:
-![without chrome extension](https://imgur.com/5IGnXnq.gif)
+<img src="https://imgur.com/5IGnXnq.gif" width = "177" height = "244">
 With the chrome extension:
-![chrome extension](https://imgur.com/9t1kbXZ.gif)
+<img src="https://imgur.com/9t1kbXZ.gif" width = "177" height = "244">
 
 ## Potentially beatable ruleset
 
