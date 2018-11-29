@@ -7,7 +7,7 @@ Torn has nerfed blackjack so it's no longer worth using this extension. It's ver
 Without the chrome extension:<br>
 <img src="https://imgur.com/5IGnXnq.gif" width = "177" height = "244">
 <br>
-With the chrome extension:<br>
+With the chrome extension(no more mouse movement or decision making!):<br>
 <img src="https://imgur.com/9t1kbXZ.gif" width = "177" height = "244">
 
 ## Project inspiration
